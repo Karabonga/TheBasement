@@ -25,7 +25,10 @@ namespace RetroEngine
             HRMap map = (HRMap)scene.Map;
 
             //Render the floor
-            DrawFloor();
+            DrawFloor(0, scene.Camera, map);
+
+            //Render the roof
+            DrawRoof(4, scene.Camera, map);
 
             //Render the scene
             for (int x = 0; x < scene.Camera.Resolution.Width; x++)
@@ -38,15 +41,42 @@ namespace RetroEngine
                 List<float> lowerYs;
                 List<float> distances;
                 List<GameObject> drawableObjects = GetWalls(ray, scene, map, x, out upperYs, out lowerYs, out distances);
-                //Add the planes in the right order
-                SortPlanes(drawableObjects, map, scene);                
                 DrawWalls(drawableObjects, upperYs, lowerYs, distances, x, scene);
             }
         }
 
-        private void DrawFloor(float height)
+        private void DrawFloor(float height, Camera cam, HRMap map)
         {
+            for (int y = cam.Resolution.Height - 1; y >= cam.Resolution.Height / 2; y--)
+            {
+                //Calculate the distance to the bottom
+                float sHeight = cam.ScreenSize.Height;
+                Vector3 dir = cam.Forward + (-sHeight / 2 + (sHeight / (cam.Resolution.Height - 1)) * y) * new Vector3(0, -1, 0);
+                dir.Normalize();
+                float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
+                float dimmingFactor = distance / cam.FarPlane;
+                Color4 color = ((SolidColorBrush)map.FloorBrush).Color;
+                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(color.Red - dimmingFactor, color.Green - dimmingFactor, color.Blue - dimmingFactor, 1));
+                DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
+                dimmedBrush.Dispose();
+            }
+        }
 
+        private void DrawRoof(float height, Camera cam, HRMap map)
+        {
+            for (int y = 0; y <= cam.Resolution.Height / 2; y++)
+            {
+                //Calculate the distance to the bottom
+                float sHeight = cam.ScreenSize.Height;
+                Vector3 dir = cam.Forward + (-sHeight / 2 + (sHeight / (cam.Resolution.Height - 1)) * y) * new Vector3(0, 1, 0);
+                dir.Normalize();
+                float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
+                float dimmingFactor = distance / cam.FarPlane;
+                Color4 color = ((SolidColorBrush)map.FloorBrush).Color;
+                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(color.Red - dimmingFactor, color.Green - dimmingFactor, color.Blue - dimmingFactor, 1));
+                DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
+                dimmedBrush.Dispose();
+            }
         }
 
         private void DrawWalls(List<GameObject> walls, List<float> upperYs, List<float> lowerYs, List<float> distances, int x, Scene scene)
@@ -64,6 +94,7 @@ namespace RetroEngine
                     DXInterface.Context2D.FillRectangle(new RectangleF(x, 0, 1, lowerYs[i]), dimmedBrush);
                     DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, scene.Camera.Resolution.Height), dimmedBrush);
                 }
+                dimmedBrush.Dispose();
             }
         }
 
@@ -157,30 +188,6 @@ namespace RetroEngine
                 }
             }
             return closestWalls;
-        }
-
-        private void SortPlanes(List<GameObject> objects, HRMap map, Scene scene)
-        {
-            for (int i = 0; i < map.Planes.Count; i++)
-            {
-                //For each vertex:
-                for (int j = 0; j < 4; j++)
-                {
-                    //Create a ray
-                    Ray ray = new Ray(scene.Camera.Position, new Vector3(map.Planes[i].Corners[j].X, map.Planes[i].Height, map.Planes[i].Corners[j].Y) - scene.Camera.Position);
-
-                    //Intersect with every other object already in object buffer
-                    for (int k = 0; k < objects.Count; k++)
-                    {
-                        //if (Intersects(ray, objects))
-                        //{
-
-                        //}
-                    }
-                    //Get the object first in list from the collided objects
-                    //Insert plane in front of that object
-                }
-            }
         }
     }
 }

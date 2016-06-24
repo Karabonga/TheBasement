@@ -16,7 +16,7 @@ namespace RetroEngine
             this.pos = pos;
             rotation = new Vector3(0, 0, 0);
             scale = new Vector3(1, 1, 1);
-            color = Color4.White;
+            color = new Color4(SharpDX.Color.Green.R / 255F, SharpDX.Color.Green.G / 255F, SharpDX.Color.Green.B / 255F, 1);
         }
 
         public GameObject(Vector3 pos, Vector3 rotation, Vector3 scale)
@@ -24,7 +24,7 @@ namespace RetroEngine
             this.pos = pos;
             this.rotation = rotation;
             this.scale = scale;
-            color = Color4.White;
+            color = new Color4(SharpDX.Color.Green.R / 255F, SharpDX.Color.Green.G / 255F, SharpDX.Color.Green.B / 255F, 1);
         }
 
         /// <summary>
