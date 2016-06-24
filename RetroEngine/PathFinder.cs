@@ -118,8 +118,7 @@ namespace RetroEngine {
             openList.Enqueue(startNode, startNode.G + startNode.H);
             while (openList.Count > 0) {
                 Node current = openList.Dequeue();
-                //pw.setColor(current.x, current.y, Color.GRAY);
-                map.SetPixel(current.x, current.y, System.Drawing.Color.Gray);
+                //map.SetPixel(current.x, current.y, System.Drawing.Color.Gray); //FOR TESTING
                 closedList.Add(current);
                 if (current.Equals(goalNode)) break;
                 List<Node> neighbours = getNeighbours(current);
@@ -160,8 +159,7 @@ namespace RetroEngine {
             openList.Enqueue(startNode, startNode.G + startNode.H);
             while (openList.Count > 0) {
                 Node current = openList.Dequeue();
-                //pw.setColor(current.x, current.y, Color.GRAY);
-                map.SetPixel(current.x, current.y, System.Drawing.Color.Gray);
+                //map.SetPixel(current.x, current.y, System.Drawing.Color.Gray); FOR TESTING
                 closedList.Add(current);
                 if (current.Equals(goalNode)) break;
                 List<Node> neighbours = identifySuccessors(current, startNode, goalNode);
@@ -248,7 +246,7 @@ namespace RetroEngine {
             return false;
         }
         private Node jump(Node initial, int dx, int dy, Node goal) {
-            map.SetPixel(initial.x, initial.y, System.Drawing.Color.LightGray);
+            //map.SetPixel(initial.x, initial.y, System.Drawing.Color.LightGray); FOR TESTING
             Node next = new Node(initial.x + dx, initial.y + dy, (dx == 0 || dy == 0) ? initial.G + D1 : initial.G + D2);
             next.dx = dx;
             next.dy = dy;
