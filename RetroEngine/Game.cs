@@ -15,6 +15,7 @@ namespace RetroEngine
         Scene scene;
         Renderer renderer;
         Input input;
+        TextureManager textureMan;
 
         public Game(Renderer renderer)
         {
@@ -32,6 +33,9 @@ namespace RetroEngine
             input.RegisterInput("TurnRight", Keys.D);
             input.RegisterInput("MoveForward", Keys.W);
             input.RegisterInput("MoveBackward", Keys.S);
+            //Create texture manager and load textures
+            textureMan = new TextureManager();
+            textureMan.Load("errorimage.jpg");
         }
 
         private void KeyUp(object sender, KeyEventArgs e)
