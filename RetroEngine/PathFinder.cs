@@ -15,11 +15,11 @@ namespace RetroEngine {
         public PathFinder(Bitmap m) {
             map = m;
         }
-        
-        /*static void Main(string[] args) {
+        /*
+        static void Main(string[] args) {
             // Display the number of command line arguments:
             PathFinder p = new PathFinder(new Bitmap("output-0.png"));
-            List<Vector2> way = p.jumpPointSearch(new Vector2(16, 16), new Vector2(34, 154));
+            LinkedList<Vector2> way = p.jumpPointSearch(new Vector2(16, 16), new Vector2(34, 154));
             Vector2 curr = way.First();
             using (Graphics g = Graphics.FromImage(p.map)) {
                 Pen pen = new Pen(System.Drawing.Color.Red);
@@ -30,8 +30,8 @@ namespace RetroEngine {
                 }
             }
             p.map.Save("mapwithway.png");
-        }*/
-        
+        }
+        */
         class Node : IEquatable<Node> {
 
             public long H;
@@ -109,7 +109,7 @@ namespace RetroEngine {
             }
             return result;
         }
-        private List<Vector2> aStar(Vector2 p1, Vector2 p2) {
+        public LinkedList<Vector2> aStar(Vector2 p1, Vector2 p2) {
             SimplePriorityQueue<Node> openList = new SimplePriorityQueue<Node>();
             List<Node> closedList = new List<Node>();
             Node startNode = new Node(p1, 0, 0);
@@ -143,15 +143,15 @@ namespace RetroEngine {
                 }
 
             }
-            List<Vector2> result = new List<Vector2>();
+            LinkedList<Vector2> result = new LinkedList<Vector2>();
             Node node = closedList.Last();
             while (node != null) {
-                result.Add(new Vector2(node.x, node.y));
+                result.AddFirst(new Vector2(node.x, node.y));
                 node = node.parent;
             }
             return result;
         }
-        private List<Vector2> jumpPointSearch(Vector2 p1, Vector2 p2) {
+        public LinkedList<Vector2> jumpPointSearch(Vector2 p1, Vector2 p2) {
             SimplePriorityQueue<Node> openList = new SimplePriorityQueue<Node>();
             List<Node> closedList = new List<Node>();
             Node startNode = new Node(p1, 0, 0);
@@ -164,7 +164,7 @@ namespace RetroEngine {
                 map.SetPixel(current.x, current.y, System.Drawing.Color.Gray);
                 closedList.Add(current);
                 if (current.Equals(goalNode)) break;
-                List<Node> neighbours = identifySuccessors(current,startNode,goalNode);
+                List<Node> neighbours = identifySuccessors(current, startNode, goalNode);
                 foreach (Node neighbour in neighbours) {
                     if (closedList.Contains(neighbour)) continue;
 
@@ -185,15 +185,14 @@ namespace RetroEngine {
                 }
 
             }
-            List<Vector2> result = new List<Vector2>();
+            LinkedList<Vector2> result = new LinkedList<Vector2>();
             Node node = closedList.Last();
             while (node != null) {
-                result.Add(new Vector2(node.x, node.y));
+                result.AddFirst(new Vector2(node.x, node.y));
                 node = node.parent;
             }
             return result;
         }
-
         private List<Node> getPrunedNeighbours(Node current, Node startNode) {
             if (current.Equals(startNode)) {
                 return getNeighbours(current);
@@ -276,11 +275,12 @@ namespace RetroEngine {
         private List<Node> identifySuccessors(Node current, Node start, Node goal) {
             List<Node> neighbours = getPrunedNeighbours(current, start);
             for (int i = 0; i < neighbours.Count; i++) {
-                neighbours[i]= jump(current, neighbours[i].x - current.x, neighbours[i].y - current.y, goal);
+                neighbours[i] = jump(current, neighbours[i].x - current.x, neighbours[i].y - current.y, goal);
                 if (neighbours[i] != null) neighbours[i].parent = current;
 
             }
             neighbours.RemoveAll(elem => elem == null);
             return neighbours;
-        }    }
+        }
+    }
 }
