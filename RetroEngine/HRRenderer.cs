@@ -25,7 +25,7 @@ namespace RetroEngine
             HRMap map = (HRMap)scene.Map;
 
             //Render the floor
-            DrawFloor();
+            //DrawFloor();
 
             //Render the scene
             for (int x = 0; x < scene.Camera.Resolution.Width; x++)
