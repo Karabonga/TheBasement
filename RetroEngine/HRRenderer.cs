@@ -25,7 +25,6 @@ namespace RetroEngine
             HRMap map = (HRMap)scene.Map;
 
             //Render the floor
-
             DrawFloor(0, scene.Camera, map);
 
             //Render the roof

@@ -15,8 +15,4 @@ class Player : GameObject
     {
         this.movespeed = NORMAL_MOVESPEED;
     }
-    move()
-    {
-
-    }
 }
