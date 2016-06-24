@@ -15,11 +15,11 @@ namespace RetroEngine {
         public PathFinder(Bitmap m) {
             map = m;
         }
-        /*
-        static void Main(string[] args) {
+        
+        /*static void Main(string[] args) {
             // Display the number of command line arguments:
             PathFinder p = new PathFinder(new Bitmap("output-0.png"));
-            List<Vector2> way = p.aStar(new Vector2(16, 16), new Vector2(34, 154));
+            List<Vector2> way = p.jumpPointSearch(new Vector2(16, 16), new Vector2(34, 154));
             Vector2 curr = way.First();
             using (Graphics g = Graphics.FromImage(p.map)) {
                 Pen pen = new Pen(System.Drawing.Color.Red);
@@ -30,8 +30,8 @@ namespace RetroEngine {
                 }
             }
             p.map.Save("mapwithway.png");
-        }
-        */
+        }*/
+        
         class Node : IEquatable<Node> {
 
             public long H;
@@ -127,7 +127,7 @@ namespace RetroEngine {
                     if (closedList.Contains(neighbour)) continue;
 
                     IEnumerable<Node> en = openList.Where(open => open.Equals(neighbour));
-                  
+
                     if (en.Count() > 0) {
                         Node n = en.First();
                         if (n.G > neighbour.G) {
@@ -151,5 +151,136 @@ namespace RetroEngine {
             }
             return result;
         }
-    }
+        private List<Vector2> jumpPointSearch(Vector2 p1, Vector2 p2) {
+            SimplePriorityQueue<Node> openList = new SimplePriorityQueue<Node>();
+            List<Node> closedList = new List<Node>();
+            Node startNode = new Node(p1, 0, 0);
+            Node goalNode = new Node(p2, 0, 0);
+            startNode.H = startNode.octileDist(goalNode);
+            openList.Enqueue(startNode, startNode.G + startNode.H);
+            while (openList.Count > 0) {
+                Node current = openList.Dequeue();
+                //pw.setColor(current.x, current.y, Color.GRAY);
+                map.SetPixel(current.x, current.y, System.Drawing.Color.Gray);
+                closedList.Add(current);
+                if (current.Equals(goalNode)) break;
+                List<Node> neighbours = identifySuccessors(current,startNode,goalNode);
+                foreach (Node neighbour in neighbours) {
+                    if (closedList.Contains(neighbour)) continue;
+
+                    IEnumerable<Node> en = openList.Where(open => open.Equals(neighbour));
+
+                    if (en.Count() > 0) {
+                        Node n = en.First();
+                        if (n.G > neighbour.G) {
+                            n.parent = current;
+                            n.G = neighbour.G;
+                            openList.UpdatePriority(n, n.G + n.H);
+                        }
+                    } else {
+                        neighbour.H = neighbour.octileDist(goalNode);
+                        neighbour.parent = current;
+                        openList.Enqueue(neighbour, neighbour.H + neighbour.G);
+                    }
+                }
+
+            }
+            List<Vector2> result = new List<Vector2>();
+            Node node = closedList.Last();
+            while (node != null) {
+                result.Add(new Vector2(node.x, node.y));
+                node = node.parent;
+            }
+            return result;
+        }
+
+        private List<Node> getPrunedNeighbours(Node current, Node startNode) {
+            if (current.Equals(startNode)) {
+                return getNeighbours(current);
+            }
+            int dx = current.dx;
+            int dy = current.dy;
+            List<Node> result = new List<Node>();
+            if (dx == 0) { //vertically
+                           //get natural neighbour
+                if (getWalkable(current.x, current.y + dy)) result.Add(new Node(current.x, current.y + dy, current.G + D1));
+                //get forced neighbours
+                if (!getWalkable(current.x + 1, current.y) && getWalkable(current.x + 1, current.y + dy))
+                    result.Add(new Node(current.x + 1, current.y + dy, current.G + D2));
+                if (!getWalkable(current.x - 1, current.y) && getWalkable(current.x - 1, current.y + dy))
+                    result.Add(new Node(current.x - 1, current.y + dy, current.G + D2));
+            } else if (dy == 0) { //horizontally
+                                  //get natural neighbour
+                if (getWalkable(current.x + dx, current.y)) result.Add(new Node(current.x + dx, current.y, current.G + D1));
+                //get forced neighbours
+                if (!getWalkable(current.x, current.y + 1) && getWalkable(current.x + dx, current.y + 1))
+                    result.Add(new Node(current.x + dx, current.y + 1, current.G + D2));
+                if (!getWalkable(current.x, current.y - 1) && getWalkable(current.x + dx, current.y - 1))
+                    result.Add(new Node(current.x + dx, current.y - 1, current.G + D2));
+            } else { //diagonal
+                     //get natural neighbours
+                if (getWalkable(current.x + dx, current.y)) result.Add(new Node(current.x + dx, current.y, current.G + D1));
+                if (getWalkable(current.x, current.y + dy)) result.Add(new Node(current.x, current.y + dy, current.G + D1));
+                if (getWalkable(current.x + dx, current.y + dy))
+                    result.Add(new Node(current.x + dx, current.y + dy, current.G + D2));
+                //get forced neighbours
+                if (!getWalkable(current.x, current.y - dy) && getWalkable(current.x + dx, current.y - dy))
+                    result.Add(new Node(current.x + dx, current.y - dy, current.G + D2));
+                if (!getWalkable(current.x - dx, current.y) && getWalkable(current.x - dx, current.y + dy))
+                    result.Add(new Node(current.x - dx, current.y + dy, current.G + D2));
+            }
+            return result;
+        }
+        private bool hasForcedNeighbour(Node current) {
+            int dx = current.dx;
+            int dy = current.dy;
+            if (dx == 0) {
+                if (!getWalkable(current.x + 1, current.y) && getWalkable(current.x + 1, current.y + dy)) return true;
+                if (!getWalkable(current.x - 1, current.y) && getWalkable(current.x - 1, current.y + dy)) return true;
+            } else if (dy == 0) {
+                if (!getWalkable(current.x, current.y + 1) && getWalkable(current.x + dx, current.y + 1)) return true;
+                if (!getWalkable(current.x, current.y - 1) && getWalkable(current.x + dx, current.y - 1)) return true;
+            } else {
+                if (!getWalkable(current.x, current.y - dy) && getWalkable(current.x + dx, current.y - dy))
+                    return true;
+                if (!getWalkable(current.x - dx, current.y) && getWalkable(current.x - dx, current.y + dy))
+                    return true;
+            }
+            return false;
+        }
+        private Node jump(Node initial, int dx, int dy, Node goal) {
+            map.SetPixel(initial.x, initial.y, System.Drawing.Color.LightGray);
+            Node next = new Node(initial.x + dx, initial.y + dy, (dx == 0 || dy == 0) ? initial.G + D1 : initial.G + D2);
+            next.dx = dx;
+            next.dy = dy;
+
+            if (!getWalkable(next.x, next.y)) return null;
+            if (next.Equals(goal) || hasForcedNeighbour(next)) return next;
+            if (dx != 0 && dy != 0) {
+                if (jump(next, dx, 0, goal) != null) return next;
+                if (jump(next, 0, dy, goal) != null) return next;
+            }
+            return jump(next, dx, dy, goal);
+
+            /*
+            while (getWalkable(next.x, next.y)) {
+                if (next.samePos(goal) || hasForcedNeighbour(next)) return next;
+                if (dx != 0 && dy != 0) {
+                    if (jump(next, dx, 0, goal) != null) return next;
+                    if (jump(next, 0, dy, goal) != null) return next;
+                }
+                next = new Node(next.x + dx, next.y + dy, (dx == 0 || dy == 0) ? next.G + D1 : next.G + D2);
+            }
+            return null;*/
+        }
+        private List<Node> identifySuccessors(Node current, Node start, Node goal) {
+            List<Node> neighbours = getPrunedNeighbours(current, start);
+            for (int i = 0; i < neighbours.Count; i++) {
+                neighbours[i]= jump(current, neighbours[i].x - current.x, neighbours[i].y - current.y, goal);
+                if (neighbours[i] != null) neighbours[i].parent = current;
+
+            }
+            neighbours.RemoveAll(elem => elem == null);
+            return neighbours;
+        }    }
 }
