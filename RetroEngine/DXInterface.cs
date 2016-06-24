@@ -32,7 +32,6 @@ namespace RetroEngine
             renderForm = new RenderForm(title);
 
             //320 x 200 is the original doom resolution
-            renderForm.ClientSize = new System.Drawing.Size(1680, 1050);
 
             //Create a swap chain and a Direct3D device
             CreateD3DDependencies();
