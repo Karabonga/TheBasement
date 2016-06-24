@@ -1,0 +1,23 @@
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\RetroEngine.exe.config
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\obj\Debug\RetroEngine.csprojResolveAssemblyReference.cache
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\RetroEngine.exe
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\RetroEngine.pdb
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.Direct3D11.dll
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.dll
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.DXGI.dll
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\obj\Debug\RetroEngine.exe
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\obj\Debug\RetroEngine.pdb
+c:\users\simon\documents\visual studio 2015\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\RetroEngine.exe.config
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\obj\Debug\RetroEngine.exe
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\obj\Debug\RetroEngine.pdb
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\RetroEngine.exe
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\RetroEngine.pdb
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\bin\Debug\SharpDX.DXGI.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\RetroEngine\obj\Debug\RetroEngine.csprojResolveAssemblyReference.cache
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Debug\RetroEngine.exe.config
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\obj\Debug\RetroEngine.exe
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\obj\Debug\RetroEngine.pdb
