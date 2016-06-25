@@ -18,7 +18,6 @@ namespace RetroEngine
         private Camera playercam;
         private Time time;
         private Scene scene;
-        private float collisionradius;
         public Player(Vector3 start, Camera cam, Scene scene)
             : base(start, null)
         {

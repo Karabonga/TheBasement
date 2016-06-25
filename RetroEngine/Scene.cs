@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using System;
+using System.Collections.Generic;
 
 namespace RetroEngine
 {
@@ -9,6 +10,7 @@ namespace RetroEngine
         protected string fileName;
         protected Map map;
         protected Camera cam;
+        protected List<NPC> npcs;
         protected Player player;
 
         public abstract void Load();
@@ -71,6 +73,12 @@ namespace RetroEngine
         public Player Player
         {
             get { return player; }
+        }
+
+        public List<NPC> NPCs
+        {
+            get { return npcs; }
+            set { npcs = value; }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using System.Collections.Generic;
 
 namespace RetroEngine
 {
@@ -15,6 +16,7 @@ namespace RetroEngine
             player = new Player(new Vector3(parser.StartPosition.X, 2f, parser.StartPosition.Y), cam, this);
             player.Time = GameConstants.Time;
             player.Rotation = cam.Rotation;
+            npcs = new List<NPC>();
         }
     }
 }

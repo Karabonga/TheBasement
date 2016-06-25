@@ -108,7 +108,7 @@ namespace RetroEngine
                 if (upperYs[i] < lowerYs[i])
                 {
                     DXInterface.Context2D.DrawBitmap(walls[i].Texture, new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(pixelX, 0, 1, walls[i].TextureSize.Height));
-                    DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), distanceBrush);
+                    DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i] - 1, 1, lowerYs[i] - upperYs[i] + 2), distanceBrush);
                 }
                 else
                 {
