@@ -139,7 +139,7 @@ namespace RetroEngine
             //Refresh the debug console
             Debug.Refresh(time.DeltaTime, gameTime);
             //Finally update the input
-            scene.Player.update(input);
+            scene.Player.update();
             input.FinalUpdate();
         }
 
