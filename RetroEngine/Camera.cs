@@ -78,5 +78,10 @@ namespace RetroEngine
         {
             get { return screenSize; }
         }
+
+        public override void update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

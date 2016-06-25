@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using System;
+using SharpDX;
 using SharpDX.Direct2D1;
 
 namespace RetroEngine
@@ -92,6 +93,11 @@ namespace RetroEngine
         {
             get { return stretchFactor; }
             set { stretchFactor = value; }
+        }
+
+        public override void update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

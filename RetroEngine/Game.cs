@@ -134,6 +134,7 @@ namespace RetroEngine
             //    scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y - 50 * time.DeltaTime), scene.Camera.Rotation.Z);
             //if (input.GetKeyDown("TurnRight"))
             //    scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y + 50 * time.DeltaTime), scene.Camera.Rotation.Z);
+            player.handleInput(input);
         }
 
         private void Update(double gameTime)
@@ -141,7 +142,7 @@ namespace RetroEngine
             //Refresh the debug console
             Debug.Refresh(time.DeltaTime, gameTime);
             //Finally update the input
-            player.update(input);
+            player.update();
             input.FinalUpdate();
         }
 
