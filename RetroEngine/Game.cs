@@ -16,6 +16,7 @@ namespace RetroEngine
         Renderer renderer;
         Input input;
         TextureManager textureMan;
+        Player player;
 
         public Game(Renderer renderer)
         {
@@ -68,6 +69,8 @@ namespace RetroEngine
                     //Continue loading the scene and its assets
                     this.scene = scene;
                     this.scene.Load();
+                    player = scene.Player;
+                    player.Scene = scene;
                 }
                 else
                     //The scene is not valid
@@ -99,9 +102,11 @@ namespace RetroEngine
         {
             //Start new time measurement
             time.Start();
+            player.Time = time;
             Debug.Log("Running the game...", MessageState.Info);
             //Run the render loop
             RenderLoop.Run(renderer.DXInterface.RenderForm, GameLoop);
+
         }
 
         private void GameLoop()
@@ -121,22 +126,22 @@ namespace RetroEngine
 
         private void Input()
         {
-            if (input.GetKeyDown("MoveForward"))
-                scene.Camera.Position += scene.Camera.Forward * (float)(10 * time.DeltaTime);
-            if (input.GetKeyDown("MoveBackward"))
-                scene.Camera.Position -= scene.Camera.Forward * (float)(10 * time.DeltaTime);
-            if (input.GetKeyDown("TurnLeft"))
-                scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y - 50 * time.DeltaTime), scene.Camera.Rotation.Z);
-            if (input.GetKeyDown("TurnRight"))
-                scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y + 50 * time.DeltaTime), scene.Camera.Rotation.Z);
+            //if (input.GetKeyDown("MoveForward"))
+            //    scene.Camera.Position += scene.Camera.Forward * (float)(10 * time.DeltaTime);
+            //if (input.GetKeyDown("MoveBackward"))
+            //    scene.Camera.Position -= scene.Camera.Forward * (float)(10 * time.DeltaTime);
+            //if (input.GetKeyDown("TurnLeft"))
+            //    scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y - 50 * time.DeltaTime), scene.Camera.Rotation.Z);
+            //if (input.GetKeyDown("TurnRight"))
+            //    scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y + 50 * time.DeltaTime), scene.Camera.Rotation.Z);
         }
 
         private void Update(double gameTime)
         {
             //Refresh the debug console
             Debug.Refresh(time.DeltaTime, gameTime);
-
             //Finally update the input
+            player.update(input);
             input.FinalUpdate();
         }
 

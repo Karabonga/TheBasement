@@ -9,6 +9,7 @@ namespace RetroEngine
         protected string fileName;
         protected Map map;
         protected Camera cam;
+        protected Player player;
 
         public abstract void Load();
 
@@ -66,6 +67,10 @@ namespace RetroEngine
         {
             get { return cam; }
             set { cam = value; }
+        }
+        public Player Player
+        {
+            get { return player; }
         }
     }
 }

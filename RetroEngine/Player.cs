@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
+using System.Drawing;
 
 namespace RetroEngine
 {
@@ -16,35 +17,55 @@ namespace RetroEngine
         private float rotationspeed;
         private Camera playercam;
         private Time time;
-        public Player(Vector3 start, Camera cam, Time time)
-            :base(start,null)
+        private Scene scene;
+        private static Bitmap map;
+        public Player(Vector3 start, Camera cam)
+            : base(start, null)
         {
             this.startposition = start;
             this.position = start;
-            this.movespeed = 10f;
-            this.rotationspeed = 10f;
+            this.movespeed = 0;
+            this.rotationspeed = 0;
             this.playercam = cam;
-            this.time = time;
-
-
         }
-        void handleInput(Input input)
+        private void handleInput(Input input)
         {
+            // acceleration
+            if (input.GetKeyDown("MoveForward"))
+                movespeed = 10;
+
             if (input.GetKeyDown("MoveBackward"))
-                this.movespeed = -movespeed;
+                movespeed = -10;
+
             if (input.GetKeyDown("TurnLeft"))
-                this.rotationspeed = -rotationspeed;
+                rotationspeed = -100;
+
+            if (input.GetKeyDown("TurnRight"))
+                rotationspeed = 100;
+
         }
-        void move(Input input)
+        private bool isWalkable(Vector3 pos, Bitmap map)
         {
+            return !(pos.X < 0 || pos.X >= map.Width || pos.Z < 0 || pos.Z >= map.Height) && map.GetPixel((int)pos.X, (int)pos.Z).B > 0;
+        }
+        private void move(Input input)
+        {
+            map = PathFinder.fromHRMap((HRMap)scene.Map, (int)position.Y);
+            Vector3 forward = Mathf.RotateAroundY(new Vector3(0, 0, 1), rotation.Y);
+            Vector3 oldPos = position;
             handleInput(input);
-            this.position += this.Forward * (float)(movespeed * time.DeltaTime);
-            this.rotation = new Vector3(this.Rotation.X, (float)(this.Rotation.Y + rotationspeed * time.DeltaTime), this.Rotation.Z);
+            position += forward * (float)(movespeed * time.DeltaTime);
+                if(!isWalkable(position, map))
+                    position = oldPos;
+            movespeed = 0;
+            rotation = new Vector3(rotation.X, (float)(rotation.Y + rotationspeed * time.DeltaTime), rotation.Z);
+            rotationspeed = 0;
             playercam.Position = position;
             playercam.Rotation = rotation;
         }
-        void update(double gameTime)
+        public void update(Input input)
         {
+            move(input);
 
         }
         public Vector3 StartPos
@@ -52,10 +73,30 @@ namespace RetroEngine
             get { return startposition; }
             set { startposition = value; }
         }
-        public float Speed
+        public float MoveSpeed
         {
             get { return movespeed; }
-            set{ movespeed = value; }
+            set { movespeed = value; }
+        }
+        public float RotationSpeed
+        {
+            get { return rotationspeed; }
+            set { rotationspeed = value; }
+        }
+        public Camera PlayerCam
+        {
+            get { return playercam; }
+            set { playercam = value; }
+        }
+        public Time Time
+        {
+            get { return time; }
+            set { time = value; }
+        }
+        public Scene Scene
+        {
+            get { return scene; }
+            set { scene = value; }
         }
     }
 }
