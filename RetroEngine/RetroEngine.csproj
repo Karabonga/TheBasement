@@ -86,6 +86,7 @@
     <Compile Include="Parser.cs" />
     <Compile Include="PathFinder.cs" />
     <Compile Include="Plane.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Priority Queue\FastPriorityQueue.cs" />
     <Compile Include="Priority Queue\FastPriorityQueueNode.cs" />
     <Compile Include="Priority Queue\IPriorityQueue.cs" />
