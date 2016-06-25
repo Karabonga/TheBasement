@@ -12,14 +12,17 @@ namespace RetroEngine
         private Size2 resolution;
         private float nearPlane;
         private float farPlane;
+        private Size2F screenSize;
 
         public Camera(Vector3 pos, float fov, Size2 resolution, float nearPlane, float farPlane)
-            : base(pos)
+            : base(pos, null)
         {
             this.fov = fov;
             this.resolution = resolution;
             this.nearPlane = nearPlane;
             this.farPlane = farPlane;
+            float WW = (float)Math.Tan(MathUtil.DegreesToRadians(fov / 2F)) * 2F;
+            screenSize = new Size2F(WW, WW * resolution.Height / resolution.Width);
         }
 
         /// <summary>
@@ -28,7 +31,12 @@ namespace RetroEngine
         public float FOV
         {
             get { return fov; }
-            set { fov = value; }
+            set
+            {
+                float WW = (float)Math.Tan(MathUtil.DegreesToRadians(fov / 2F)) * 2F;
+                screenSize = new Size2F(WW, WW * resolution.Height / resolution.Width);
+                fov = value;
+            }
         }
 
         /// <summary>
@@ -37,7 +45,12 @@ namespace RetroEngine
         public Size2 Resolution
         {
             get { return resolution; }
-            set { resolution = value; }
+            set
+            {
+                float WW = (float)Math.Tan(MathUtil.DegreesToRadians(fov / 2F)) * 2F;
+                screenSize = new Size2F(WW, WW * resolution.Height / resolution.Width);
+                resolution = value;
+            }
         }
 
         /// <summary>
@@ -63,11 +76,7 @@ namespace RetroEngine
         /// </summary>
         public Size2F ScreenSize
         {
-            get
-            {
-                float WW = (float)Math.Tan(MathUtil.DegreesToRadians(fov / 2F)) * 2F;
-                return new Size2F(WW, WW * resolution.Height / resolution.Width);
-            }
+            get { return screenSize; }
         }
     }
 }

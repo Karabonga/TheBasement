@@ -1,0 +1,10 @@
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\RetroEngine.exe.config
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\RetroEngine.exe
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\RetroEngine.pdb
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\SharpDX.Direct2D1.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\SharpDX.Direct3D11.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\SharpDX.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\bin\Release\SharpDX.DXGI.dll
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\obj\Release\RetroEngine.exe
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\obj\Release\RetroEngine.pdb
+C:\Users\karaon\Desktop\Projects\RetroEngine\TheBasement\RetroEngine\obj\Release\RetroEngine.csprojResolveAssemblyReference.cache

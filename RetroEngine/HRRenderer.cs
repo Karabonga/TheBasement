@@ -2,6 +2,7 @@
 using SharpDX.Direct2D1;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RetroEngine
 {
@@ -34,14 +35,16 @@ namespace RetroEngine
             for (int x = 0; x < scene.Camera.Resolution.Width; x++)
             {
                 //Calculate the ray
+
                 Ray ray = ConstructRayThroughPixel(x, scene.Camera);
 
                 //Get the color for the pixel
                 List<float> upperYs;
                 List<float> lowerYs;
                 List<float> distances;
-                List<GameObject> drawableObjects = GetWalls(ray, scene, map, x, out upperYs, out lowerYs, out distances);
-                DrawWalls(drawableObjects, upperYs, lowerYs, distances, x, scene);
+                List<Vector3> collisions;
+                List<Wall> walls = GetWalls(ray, scene, map, x, out upperYs, out lowerYs, out distances, out collisions);
+                DrawWalls(walls, upperYs, lowerYs, distances, collisions, x, scene);
             }
         }
 
@@ -72,29 +75,35 @@ namespace RetroEngine
                 dir.Normalize();
                 float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
                 float dimmingFactor = distance / cam.FarPlane;
-                Color4 color = ((SolidColorBrush)map.FloorBrush).Color;
+                Color4 color = ((SolidColorBrush)map.RoofBrush).Color;
                 Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(color.Red - dimmingFactor, color.Green - dimmingFactor, color.Blue - dimmingFactor, 1));
                 DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
                 dimmedBrush.Dispose();
             }
         }
 
-        private void DrawWalls(List<GameObject> walls, List<float> upperYs, List<float> lowerYs, List<float> distances, int x, Scene scene)
+        private void DrawWalls(List<Wall> walls, List<float> upperYs, List<float> lowerYs, List<float> distances, List<Vector3> collisions, int x, Scene scene)
         {
             for (int i = 0; i < walls.Count; i++)
             {
-                //Apply a little dimming by distance
+                //Dim the texture by distance
                 float dimmingFactor = distances[i] / scene.Camera.FarPlane;
-                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(walls[i].Color.Red - dimmingFactor, walls[i].Color.Green - dimmingFactor, walls[i].Color.Blue - dimmingFactor, 1));
+                Brush distanceBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
+                float distanceToStart = (collisions[i] - new Vector3(walls[i].Start.X, scene.Camera.Position.Y, walls[i].Start.Y)).Length();
+                //Stretch the texture
+                float pixelX = ((distanceToStart / (walls[i].Direction.Length() / walls[i].StretchFactor.Width)) * walls[i].TextureSize.Width) % walls[i].TextureSize.Width;
                 if (upperYs[i] < lowerYs[i])
-                    DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), dimmedBrush);
+                {
+                    DXInterface.Context2D.DrawBitmap(GameConstants.TextureManager.Textures["errorimage.jpg"], new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(pixelX, 0, 1, walls[i].TextureSize.Height));
+                    DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), distanceBrush);
+                }
                 else
                 {
                     //Draw to rectangles and leave a whole in the middle
-                    DXInterface.Context2D.FillRectangle(new RectangleF(x, 0, 1, lowerYs[i]), dimmedBrush);
-                    DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, scene.Camera.Resolution.Height), dimmedBrush);
+                    DXInterface.Context2D.FillRectangle(new RectangleF(x, 0, 1, lowerYs[i]), distanceBrush);
+                    DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, scene.Camera.Resolution.Height), distanceBrush);
                 }
-                dimmedBrush.Dispose();
+                distanceBrush.Dispose();
             }
         }
 
@@ -104,7 +113,8 @@ namespace RetroEngine
             float leftX = cam.ScreenSize.Width / 2F;
 
             //Gets the direction of the ray through the given pixel
-            Vector3 direction = cam.Forward + (-leftX + ((leftX * 2) / (cam.Resolution.Width - 1)) * pixelX) * Mathf.Left(cam.Forward);
+            Vector3 forward = cam.Forward;
+            Vector3 direction = forward + (-leftX + ((leftX * 2) / (cam.Resolution.Width - 1)) * pixelX) * Mathf.Left(forward);
             direction.Normalize();
 
             //Creates a new ray
@@ -144,14 +154,15 @@ namespace RetroEngine
             return false;
         }
 
-        private List<GameObject> GetWalls(Ray ray, Scene scene, HRMap map, int currentX, out List<float> upperYs, out List<float> lowerYs, out List<float> distances)
+        private List<Wall> GetWalls(Ray ray, Scene scene, HRMap map, int currentX, out List<float> upperYs, out List<float> lowerYs, out List<float> distances, out List<Vector3> collisions)
         {
             //Check for collision with each wall
             //Store the walls in the lists sorted by the distance to make rendering easier
             distances = new List<float>();
-            List<GameObject> closestWalls = new List<GameObject>();
+            List<Wall> closestWalls = new List<Wall>();
             upperYs = new List<float>();
             lowerYs = new List<float>();
+            collisions = new List<Vector3>();
             for (int j = 0; j < map.Walls.Count; j++)
             {
                 //Intersect the ray with this wall
@@ -172,6 +183,7 @@ namespace RetroEngine
                             upperYs.Insert(i, tmpUpperY);
                             lowerYs.Insert(i, tmpLowerY);
                             distances.Insert(i, d);
+                            collisions.Insert(i, collision);
                             inserted = true;
                             break;
                         }
@@ -184,6 +196,7 @@ namespace RetroEngine
                         upperYs.Add(tmpUpperY);
                         lowerYs.Add(tmpLowerY);
                         distances.Add(d);
+                        collisions.Add(collision);
                     }
                 }
             }

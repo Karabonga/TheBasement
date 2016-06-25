@@ -8,7 +8,7 @@ namespace RetroEngine
         private float height;
 
         public Plane(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4, float height)
-            :base(new Vector3((v1.X + v2.X + v3.X + v4.X) / 4, height, (v1.Y + v2.Y + v3.Y + v4.Y) / 4))
+            :base(new Vector3((v1.X + v2.X + v3.X + v4.X) / 4, height, (v1.Y + v2.Y + v3.Y + v4.Y) / 4), null)
         {
             corners = new Vector2[4];
             corners[0] = v1;

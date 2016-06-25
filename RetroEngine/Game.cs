@@ -20,8 +20,12 @@ namespace RetroEngine
         public Game(Renderer renderer)
         {
             this.renderer = renderer;
+            //Create texture manager
+            textureMan = new TextureManager();
             //Fill in the missing game constants
-            GameConstants.Initialize(renderer.DXInterface.Context2D);
+            GameConstants.Initialize(renderer.DXInterface.Context2D, textureMan, time);
+            //Load textures
+            textureMan.Load("errorimage.jpg");
             //Initialize new time measurement
             time = new Time();
             //Add some input options
@@ -33,9 +37,6 @@ namespace RetroEngine
             input.RegisterInput("TurnRight", Keys.D);
             input.RegisterInput("MoveForward", Keys.W);
             input.RegisterInput("MoveBackward", Keys.S);
-            //Create texture manager and load textures
-            textureMan = new TextureManager();
-            textureMan.Load("errorimage.jpg");
         }
 
         private void KeyUp(object sender, KeyEventArgs e)

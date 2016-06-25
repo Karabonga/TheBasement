@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using SharpDX.Direct2D1;
 
 namespace RetroEngine
 {
@@ -8,14 +9,16 @@ namespace RetroEngine
         private Vector2 end;
         private float bottom;
         private float top;
+        private Size2F stretchFactor;
 
-        public Wall(Vector2 start, Vector2 end)
-            : base(new Vector3(start.X + 0.5F * (end.X - start.X), 0.5F, start.Y + 0.5F * (end.Y - start.Y)))
+        public Wall(Vector2 start, Vector2 end, float top, float bottom, Bitmap texture)
+            : base(new Vector3(start.X + 0.5F * (end.X - start.X), 0.5F, start.Y + 0.5F * (end.Y - start.Y)), texture)
         {
-            bottom = 0;
-            top = 1;
+            this.bottom = bottom;
+            this.top = top;
             this.start = start;
             this.end = end;
+            stretchFactor = new Size2F(Direction.Length() / (top - bottom), 1);
         }
 
         /// <summary>
@@ -80,6 +83,15 @@ namespace RetroEngine
         public float Length
         {
             get { return Direction.Length(); }
+        }
+
+        /// <summary>
+        /// Gets or sets the factor defining how often the texture is repeated on the wall.
+        /// </summary>
+        public Size2F StretchFactor
+        {
+            get { return stretchFactor; }
+            set { stretchFactor = value; }
         }
     }
 }

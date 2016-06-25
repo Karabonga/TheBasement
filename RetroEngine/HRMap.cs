@@ -10,6 +10,7 @@ namespace RetroEngine
         private List<Wall> walls;
         private List<Plane> planes;
         private Brush floorBrush;
+        private Brush roofBrush;
 
         public HRMap(Size2 mapSize)
             : base(mapSize)
@@ -17,6 +18,7 @@ namespace RetroEngine
             walls = new List<Wall>();
             planes = new List<Plane>();
             floorBrush = new SolidColorBrush(GameConstants.Context2D, new Color4(Color.DeepPink.R / 255F, Color.DeepPink.G / 255F, Color.DeepPink.B / 255F, 1));
+            roofBrush = new SolidColorBrush(GameConstants.Context2D, new Color4(Color.Yellow.R / 255F, Color.Yellow.G / 255F, Color.Yellow.B / 255F, 1));
         }
 
         /// <summary>
@@ -62,6 +64,15 @@ namespace RetroEngine
         {
             get { return floorBrush; }
             set { floorBrush = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the roof brush.
+        /// </summary>
+        public Brush RoofBrush
+        {
+            get { return roofBrush; }
+            set { roofBrush = value; }
         }
 
         #region IDisposable Support
