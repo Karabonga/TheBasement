@@ -16,7 +16,6 @@ namespace RetroEngine
         Renderer renderer;
         Input input;
         TextureManager textureMan;
-        Player player;
 
         public Game(Renderer renderer)
         {
@@ -29,6 +28,7 @@ namespace RetroEngine
             textureMan.LoadFolder("textures");
             //Initialize new time measurement
             time = new Time();
+            GameConstants.Initialize(renderer.DXInterface.Context2D, textureMan, time);
             //Add some input options
             renderer.DXInterface.RenderForm.KeyDown += KeyDown;
             renderer.DXInterface.RenderForm.KeyUp += KeyUp;
@@ -69,8 +69,6 @@ namespace RetroEngine
                     //Continue loading the scene and its assets
                     this.scene = scene;
                     this.scene.Load();
-                    player = scene.Player;
-                    player.Scene = scene;
                 }
                 else
                     //The scene is not valid
@@ -102,7 +100,6 @@ namespace RetroEngine
         {
             //Start new time measurement
             time.Start();
-            player.Time = time;
             Debug.Log("Running the game...", MessageState.Info);
             //Run the render loop
             RenderLoop.Run(renderer.DXInterface.RenderForm, GameLoop);
@@ -141,7 +138,7 @@ namespace RetroEngine
             //Refresh the debug console
             Debug.Refresh(time.DeltaTime, gameTime);
             //Finally update the input
-            player.update(input);
+            scene.Player.update(input);
             input.FinalUpdate();
         }
 

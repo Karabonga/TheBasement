@@ -3,7 +3,7 @@ using SharpDX.Direct2D1;
 using System.Collections.Generic;
 
 namespace RetroEngine {
-    class NPC : GameObject {
+    class NPC : Sprite {
         private PathFinder pathfinder;
         private int height;
         private List<Vector2> wanderPoints;
@@ -11,13 +11,14 @@ namespace RetroEngine {
         private LinkedList<Vector2> catchPoints;
         private LinkedList<Vector2> returnPoints;
         private float movespeed;
+        private Sprite sprite;
         private NPCMode mode = NPCMode.Wander;
         enum NPCMode {
             Wander,
             Catch,
             ReturnToWander
         }
-        public NPC(Vector3 pos, Bitmap texture, HRMap map, int npcHeight, List<Vector2> wanderPoints) : base(pos, texture) {
+        public NPC(Vector3 pos, Animation anim, HRMap map, int npcHeight, List<Vector2> wanderPoints) : base(anim, pos) {
             this.height = npcHeight;
             this.pathfinder = new PathFinder(PathFinder.fromHRMap(map, this.height));
             this.wanderPoints = wanderPoints;

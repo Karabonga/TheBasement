@@ -19,7 +19,7 @@ namespace RetroEngine
         private Time time;
         private Scene scene;
         private static Bitmap map;
-        public Player(Vector3 start, Camera cam)
+        public Player(Vector3 start, Scene scene, Camera cam)
             : base(start, null)
         {
             this.startposition = start;
@@ -27,6 +27,7 @@ namespace RetroEngine
             this.movespeed = 0;
             this.rotationspeed = 0;
             this.playercam = cam;
+            this.scene = scene;
         }
         private void handleInput(Input input)
         {
