@@ -8,22 +8,24 @@ namespace RetroEngine {
         private int height;
         private List<Vector2> wanderPoints;
         private int wanderIndex = 0;
-        private List<Vector2> catchPoints;
-        private int catchIndex = 0;
+        private LinkedList<Vector2> catchPoints;
+        private LinkedList<Vector2> returnPoints;
         private float movespeed;
         private NPCMode mode = NPCMode.Wander;
         enum NPCMode {
             Wander,
-            Catch
+            Catch,
+            ReturnToWander
         }
-        public NPC(Vector3 pos, Bitmap texture, HRMap map, int npcHeight) : base(pos, texture) {
+        public NPC(Vector3 pos, Bitmap texture, HRMap map, int npcHeight, List<Vector2> wanderPoints) : base(pos, texture) {
             this.height = npcHeight;
             this.pathfinder = new PathFinder(PathFinder.fromHRMap(map, this.height));
+            this.wanderPoints = wanderPoints;
         }
 
         private bool seeingPlayer() {
             /*
-            if (condition) {
+            if (somethingmagicalhappens) {
                 catchPoints = pathfinder.jumpPointSearch(new Vector2(Position.X, Position.Z), playerPosition);
                 catchIndex = 0;
                 return true;
@@ -40,15 +42,39 @@ namespace RetroEngine {
                 if (seeingPlayer()) {
                     mode = NPCMode.Catch;
                 } else return Vector3.Subtract(new Vector3(wanderPoints[wanderIndex].X, Position.Y, wanderPoints[wanderIndex].Y), Position);
+
             } else if (mode.Equals(NPCMode.Catch)) {
                 seeingPlayer();
-                if (Vector2.Distance(new Vector2(Position.X, Position.Z), catchPoints[catchIndex]) < 1) {
-                    catchIndex++;
+                if (Vector2.Distance(new Vector2(Position.X, Position.Z), catchPoints.First.Value) < 1) {
+                    catchPoints.RemoveFirst();
                 }
-                if (catchIndex < catchPoints.Count) {
+                if (catchPoints.Count < 1) {
+                    mode = NPCMode.ReturnToWander;
+                    int min = 0;
+                    float minDist = float.MaxValue;
+                    for (int i = 0; i < wanderPoints.Count; i++) {
+                        float dist = Vector2.Distance(wanderPoints[i], new Vector2(Position.X, Position.Z));
+                        if (dist < minDist) {
+                            min = i;
+                            minDist = dist;
+                        }
+                    }
+                    returnPoints = pathfinder.jumpPointSearch(new Vector2(Position.X, Position.Z), wanderPoints[min]);
+                } else return Vector3.Subtract(new Vector3(catchPoints.First.Value.X, Position.Y, catchPoints.First.Value.Y), Position);
+            } else if (mode.Equals(NPCMode.ReturnToWander)) {
+                if (seeingPlayer()) {
+                    mode = NPCMode.Catch;
+                } else {
+                    if (Vector2.Distance(new Vector2(Position.X, Position.Z), returnPoints.First.Value) < 1) {
+                        returnPoints.RemoveFirst();
+                    }
+                    if (returnPoints.Count > 0) {
+                        return Vector3.Subtract(new Vector3(returnPoints.First.Value.X, Position.Y, returnPoints.First.Value.Y), Position);
+                    }
                     mode = NPCMode.Wander;
                     return think();
-                } else return Vector3.Subtract(new Vector3(catchPoints[catchIndex].X, Position.Y, wanderPoints[wanderIndex].Y), Position);
+                }
+
             }
             Debug.Log("Something went terribly wrong...");
             return Vector3.Zero;
