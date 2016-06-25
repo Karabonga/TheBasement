@@ -76,6 +76,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameConstants.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GraphicsHelper.cs" />
     <Compile Include="HRMap.cs" />
     <Compile Include="HRParser.cs" />
     <Compile Include="HRRenderer.cs" />

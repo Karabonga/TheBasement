@@ -43,7 +43,7 @@ namespace RetroEngine
                 float roofHeight = 0;
                 if (!float.TryParse(roofData[0], out roofHeight))
                     throw new Exception("Couldn't parse the height of the roof in file '" + fileName + "'.");
-                map = new HRMap(mapSize, floorHeight, GameConstants.TextureManager.Textures[floorData[1]], roofHeight, GameConstants.TextureManager.Textures[roofData[1]]);
+                map = new HRMap(mapSize, floorHeight, Color.SaddleBrown, roofHeight, Color.DarkKhaki);
                 //Get the map walls
                 int wallsEnd = 0;
                 for (int y = 5; data[y] != "-" && y < data.Length; y++)

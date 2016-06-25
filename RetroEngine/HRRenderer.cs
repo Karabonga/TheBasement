@@ -50,6 +50,8 @@ namespace RetroEngine
 
         private void DrawFloor(float height, Camera cam, HRMap map)
         {
+            RectangleF rect = new RectangleF(0, 0, 50, 50);
+
             for (int y = cam.Resolution.Height - 1; y >= cam.Resolution.Height / 2; y--)
             {
                 //Calculate the distance to the bottom
@@ -59,6 +61,18 @@ namespace RetroEngine
                 float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
                 float dimmingFactor = distance / cam.FarPlane;
                 Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
+                //Get the distance to the pivot point of the textures
+                //float worldSpaceWidth = -(float)Math.Tan(MathUtil.DegreesToRadians(cam.FOV / 2F)) * 2 *(new Vector2(dir.X, dir.Z) * distance).Length();
+                //Vector3 collision = cam.Position + dir * distance;
+                //Vector3 leftBorder = collision + worldSpaceWidth / 2 * Mathf.Left(cam.Forward);
+                //Vector3 rightBorder = collision + worldSpaceWidth / 2 * (-Mathf.Left(cam.Forward));
+                //Vector2 leftUV = new Vector2(leftBorder.X / rect.Width * map.FloorTexture.PixelSize.Width, leftBorder.Z / rect.Height * map.FloorTexture.PixelSize.Height);
+                //Vector2 rightUV = new Vector2(rightBorder.X / rect.Width * map.FloorTexture.PixelSize.Width, rightBorder.Z / rect.Height * map.FloorTexture.PixelSize.Height);
+                //float textureWidth = worldSpaceWidth * map.FloorTexture.PixelSize.Width;
+                ////Get angle
+                //float angle = MathUtil.DegreesToRadians(-(float)Math.Acos(Mathf.Dot(rightUV - leftUV, new Vector2(1, 0)) / ((rightUV - leftUV).Length())));
+                //DXInterface.Context2D.DrawBitmap(map.FloorTexture, new RectangleF(0, y, cam.Resolution.Width, 1), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(leftUV.X, leftUV.Y, (rightUV - leftUV).Length(), 1));
+                DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), map.FloorBrush);
                 DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
                 dimmedBrush.Dispose();
             }
@@ -75,6 +89,7 @@ namespace RetroEngine
                 float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
                 float dimmingFactor = distance / cam.FarPlane;
                 Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
+                DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), map.RoofBrush);
                 DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
                 dimmedBrush.Dispose();
             }

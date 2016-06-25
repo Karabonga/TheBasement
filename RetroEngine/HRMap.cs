@@ -9,20 +9,20 @@ namespace RetroEngine
     {
         private List<Wall> walls;
         private List<Plane> planes;
-        private Bitmap floorTexture;
+        private SolidColorBrush floorBrush;
         private float floorHeight;
-        private Bitmap roofTexture;
+        private SolidColorBrush roofBrush;
         private float roofHeight;
 
-        public HRMap(Size2 mapSize, float floorHeight, Bitmap floorTexture, float roofHeight, Bitmap roofTexture)
+        public HRMap(Size2 mapSize, float floorHeight, Color floorBrush, float roofHeight, Color roofBrush)
             : base(mapSize)
         {
             walls = new List<Wall>();
             planes = new List<Plane>();
             this.floorHeight = floorHeight;
-            this.floorTexture = floorTexture;
+            this.floorBrush = new SolidColorBrush(GameConstants.Context2D, floorBrush);
             this.roofHeight = roofHeight;
-            this.roofTexture = roofTexture;
+            this.roofBrush = new SolidColorBrush(GameConstants.Context2D, roofBrush);
         }
 
         /// <summary>
@@ -73,10 +73,10 @@ namespace RetroEngine
         /// <summary>
         /// Gets or sets the floor texture.
         /// </summary>
-        public Bitmap FloorTexture
+        public SolidColorBrush FloorBrush
         {
-            get { return floorTexture; }
-            set { floorTexture = value; }
+            get { return floorBrush; }
+            set { floorBrush = value; }
         }
 
         /// <summary>
@@ -91,10 +91,10 @@ namespace RetroEngine
         /// <summary>
         /// Gets or sets the roof texture.
         /// </summary>
-        public Bitmap RoofTexture
+        public SolidColorBrush RoofBrush
         {
-            get { return roofTexture; }
-            set { roofTexture = value; }
+            get { return roofBrush; }
+            set { roofBrush = value; }
         }
 
         #region IDisposable Support
@@ -108,8 +108,8 @@ namespace RetroEngine
                 {
                     for (int i = 0; i < walls.Count; i++)
                         walls[i].Dispose();
-                    floorTexture.Dispose();
-                    roofTexture.Dispose();
+                    floorBrush.Dispose();
+                    roofBrush.Dispose();
                 }
                 disposedValue = true;
             }
