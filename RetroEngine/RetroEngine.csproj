@@ -83,6 +83,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Mathf.cs" />
+    <Compile Include="NPC.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="PathFinder.cs" />
     <Compile Include="Plane.cs" />
