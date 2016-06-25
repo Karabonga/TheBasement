@@ -131,6 +131,7 @@ namespace RetroEngine
             //    scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y - 50 * time.DeltaTime), scene.Camera.Rotation.Z);
             //if (input.GetKeyDown("TurnRight"))
             //    scene.Camera.Rotation = new Vector3(scene.Camera.Rotation.X, (float)(scene.Camera.Rotation.Y + 50 * time.DeltaTime), scene.Camera.Rotation.Z);
+            scene.Player.handleInput(input);
         }
 
         private void Update(double gameTime)

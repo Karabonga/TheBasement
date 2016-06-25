@@ -18,8 +18,8 @@ namespace RetroEngine
         private Camera playercam;
         private Time time;
         private Scene scene;
-        private static Bitmap map;
-        public Player(Vector3 start, Scene scene, Camera cam)
+        private float collisionradius;
+        public Player(Vector3 start, Camera cam)
             : base(start, null)
         {
             this.startposition = start;
@@ -29,7 +29,7 @@ namespace RetroEngine
             this.playercam = cam;
             this.scene = scene;
         }
-        private void handleInput(Input input)
+        public void handleInput(Input input)
         {
             // acceleration
             if (input.GetKeyDown("MoveForward"))
@@ -45,28 +45,47 @@ namespace RetroEngine
                 rotationspeed = 100;
 
         }
-        private bool isWalkable(Vector3 pos, Bitmap map)
+
+        private void move()
         {
-            return !(pos.X < 0 || pos.X >= map.Width || pos.Z < 0 || pos.Z >= map.Height) && map.GetPixel((int)pos.X, (int)pos.Z).B > 0;
-        }
-        private void move(Input input)
-        {
-            map = PathFinder.fromHRMap((HRMap)scene.Map, (int)position.Y);
+            collisionDetection();
             Vector3 forward = Mathf.RotateAroundY(new Vector3(0, 0, 1), rotation.Y);
             Vector3 oldPos = position;
-            handleInput(input);
             position += forward * (float)(movespeed * time.DeltaTime);
-                if(!isWalkable(position, map))
-                    position = oldPos;
             movespeed = 0;
             rotation = new Vector3(rotation.X, (float)(rotation.Y + rotationspeed * time.DeltaTime), rotation.Z);
             rotationspeed = 0;
             playercam.Position = position;
             playercam.Rotation = rotation;
         }
-        public void update(Input input)
+        private void collisionDetection()
         {
-            move(input);
+            HRMap map = (HRMap)scene.Map;
+            
+            foreach(Wall w in map.Walls)
+            {
+                float distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
+                float delta = Math.Abs(distance - w.Length);
+                if(delta < 0.2f)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
+                        delta = Math.Abs(distance - w.Length);
+                        if (delta < 0.15f)
+                        {
+                            Vector3 normal = new Vector3(w.Normal.X, 0, w.Normal.Y);
+                            normal.Normalize();
+                            position += normal * (0.15f - delta);
+                        }
+                    }
+                }
+            }
+        }
+
+        public override void update()
+        {
+            move();
 
         }
         public Vector3 StartPos

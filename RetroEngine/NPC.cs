@@ -1,6 +1,7 @@
 ﻿using SharpDX;
 using SharpDX.Direct2D1;
 using System.Collections.Generic;
+using System;
 
 namespace RetroEngine {
     class NPC : Sprite {
@@ -81,5 +82,9 @@ namespace RetroEngine {
             return Vector3.Zero;
         }
 
+        public override void update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

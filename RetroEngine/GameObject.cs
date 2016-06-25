@@ -4,7 +4,7 @@ using SharpDX.Direct2D1;
 
 namespace RetroEngine
 {
-    class GameObject : IDisposable
+    abstract class GameObject : IDisposable
     {
         private Vector3 pos;
         private Vector3 rotation;
@@ -34,6 +34,7 @@ namespace RetroEngine
             if (texture != null)
                 textureSize = texture.PixelSize;
         }
+        abstract public void update();
 
         /// <summary>
         /// Gets or sets the position of the game object.

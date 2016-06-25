@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using System;
+using SharpDX;
 
 namespace RetroEngine
 {
@@ -34,6 +35,11 @@ namespace RetroEngine
         {
             get { return height; }
             set { height = value; }
+        }
+
+        public override void update()
+        {
+            throw new NotImplementedException();
         }
     }
 }
