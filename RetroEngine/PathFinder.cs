@@ -32,6 +32,18 @@ namespace RetroEngine {
             p.map.Save("mapwithway.png");
         }
         */
+        public static Bitmap fromHRMap(HRMap m, int playerheight) {
+            Bitmap result = new Bitmap(m.Size.Width, m.Size.Height);
+            using (Graphics g = Graphics.FromImage(result)) {
+                g.FillRectangle(Brushes.White, 0, 0, m.Size.Width, m.Size.Height);
+                Pen pen = new Pen(System.Drawing.Color.Black, 3);
+                foreach (Wall w in m.Walls) {
+                    if (w.Bottom <= playerheight || w.Bottom > w.Top)
+                        g.DrawLine(pen, w.Start.X, w.Start.Y, w.End.X, w.End.Y);
+                }
+            }
+            return result;
+        }
         class Node : IEquatable<Node> {
 
             public long H;
