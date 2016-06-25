@@ -46,6 +46,10 @@
     <Content Include="lib\SharpDX.DXGI.dll" />
     <Content Include="Priority Queue\Priority Queue.csproj" />
     <Content Include="textures\errorimage.jpg" />
+    <Content Include="textures\WoodenWall.png" />
+    <Content Include="textures\WoodenWallGap.png" />
+    <Content Include="textures\WoodenWallRustyWindow.png" />
+    <Content Include="textures\WoodenWallWindow.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SharpDX">

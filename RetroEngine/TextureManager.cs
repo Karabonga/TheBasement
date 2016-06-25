@@ -24,9 +24,18 @@ namespace RetroEngine
         /// <param name="file">The name of the file.</param>
         public void Load(string file)
         {
-            System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromFile(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\textures\\" + file);
-            textures.Add(file, DrawingToSharpDX(bmp));
-            Debug.Log("Loaded texture '" + file + "'!");
+            System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromFile(file);
+            string[] fileName = file.Split(new char[] { '\\' });
+            textures.Add(fileName[fileName.Length - 1], DrawingToSharpDX(bmp));
+            Debug.Log("Loaded texture '" + fileName[fileName.Length - 1] + "'!");
+        }
+
+        public void LoadFolder(string folder)
+        {
+            string pathTo = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string[] files = Directory.GetFiles(pathTo +  "\\" + folder);
+            for (int i = 0; i < files.Length; i++)
+                Load(files[i]);
         }
 
         private unsafe Bitmap DrawingToSharpDX(System.Drawing.Bitmap bitmap)

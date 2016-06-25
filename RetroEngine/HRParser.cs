@@ -33,10 +33,20 @@ namespace RetroEngine
                 if (!int.TryParse(mapDim[1], out mapSize.Height))
                     throw new Exception("Couldn't parse the height of the map in file '" + fileName + "'.");
                 Debug.Log("Parser: map size " + mapSize.ToString());
-                map = new HRMap(mapSize);
+                //Get the floor
+                string[] floorData = data[3].Split(new char[] { ';' });
+                float floorHeight = 0;
+                if (!float.TryParse(floorData[0], out floorHeight))
+                    throw new Exception("Couldn't parse the height of the floor in file '" + fileName + "'.");
+                //Get the roof
+                string[] roofData = data[4].Split(new char[] { ';' });
+                float roofHeight = 0;
+                if (!float.TryParse(roofData[0], out roofHeight))
+                    throw new Exception("Couldn't parse the height of the roof in file '" + fileName + "'.");
+                map = new HRMap(mapSize, floorHeight, GameConstants.TextureManager.Textures[floorData[1]], roofHeight, GameConstants.TextureManager.Textures[roofData[1]]);
                 //Get the map walls
                 int wallsEnd = 0;
-                for (int y = 3; data[y] != "-" && y < data.Length; y++)
+                for (int y = 5; data[y] != "-" && y < data.Length; y++)
                 {
                     wallsEnd = y;
                     string[] tmp = data[y].Split(new char[] { ';' });

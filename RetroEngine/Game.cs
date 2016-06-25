@@ -25,7 +25,7 @@ namespace RetroEngine
             //Fill in the missing game constants
             GameConstants.Initialize(renderer.DXInterface.Context2D, textureMan, time);
             //Load textures
-            textureMan.Load("errorimage.jpg");
+            textureMan.LoadFolder("textures");
             //Initialize new time measurement
             time = new Time();
             //Add some input options

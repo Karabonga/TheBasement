@@ -9,16 +9,20 @@ namespace RetroEngine
     {
         private List<Wall> walls;
         private List<Plane> planes;
-        private Brush floorBrush;
-        private Brush roofBrush;
+        private Bitmap floorTexture;
+        private float floorHeight;
+        private Bitmap roofTexture;
+        private float roofHeight;
 
-        public HRMap(Size2 mapSize)
+        public HRMap(Size2 mapSize, float floorHeight, Bitmap floorTexture, float roofHeight, Bitmap roofTexture)
             : base(mapSize)
         {
             walls = new List<Wall>();
             planes = new List<Plane>();
-            floorBrush = new SolidColorBrush(GameConstants.Context2D, new Color4(Color.DeepPink.R / 255F, Color.DeepPink.G / 255F, Color.DeepPink.B / 255F, 1));
-            roofBrush = new SolidColorBrush(GameConstants.Context2D, new Color4(Color.Yellow.R / 255F, Color.Yellow.G / 255F, Color.Yellow.B / 255F, 1));
+            this.floorHeight = floorHeight;
+            this.floorTexture = floorTexture;
+            this.roofHeight = roofHeight;
+            this.roofTexture = roofTexture;
         }
 
         /// <summary>
@@ -58,21 +62,39 @@ namespace RetroEngine
         }
 
         /// <summary>
-        /// Gets or sets the floor brush.
+        /// Gets or sets the height of the floor.
         /// </summary>
-        public Brush FloorBrush
+        public float FloorHeight
         {
-            get { return floorBrush; }
-            set { floorBrush = value; }
+            get { return floorHeight; }
+            set { floorHeight = value; }
         }
 
         /// <summary>
-        /// Gets or sets the roof brush.
+        /// Gets or sets the floor texture.
         /// </summary>
-        public Brush RoofBrush
+        public Bitmap FloorTexture
         {
-            get { return roofBrush; }
-            set { roofBrush = value; }
+            get { return floorTexture; }
+            set { floorTexture = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the height of the roof.
+        /// </summary>
+        public float RoofHeight
+        {
+            get { return roofHeight; }
+            set { roofHeight = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the roof texture.
+        /// </summary>
+        public Bitmap RoofTexture
+        {
+            get { return roofTexture; }
+            set { roofTexture = value; }
         }
 
         #region IDisposable Support
@@ -86,7 +108,8 @@ namespace RetroEngine
                 {
                     for (int i = 0; i < walls.Count; i++)
                         walls[i].Dispose();
-                    floorBrush.Dispose();
+                    floorTexture.Dispose();
+                    roofTexture.Dispose();
                 }
                 disposedValue = true;
             }

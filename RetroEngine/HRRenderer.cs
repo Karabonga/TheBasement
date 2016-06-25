@@ -58,8 +58,7 @@ namespace RetroEngine
                 dir.Normalize();
                 float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
                 float dimmingFactor = distance / cam.FarPlane;
-                Color4 color = ((SolidColorBrush)map.FloorBrush).Color;
-                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(color.Red - dimmingFactor, color.Green - dimmingFactor, color.Blue - dimmingFactor, 1));
+                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
                 DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
                 dimmedBrush.Dispose();
             }
@@ -75,8 +74,7 @@ namespace RetroEngine
                 dir.Normalize();
                 float distance = Math.Abs((height - cam.Position.Y) / dir.Y);
                 float dimmingFactor = distance / cam.FarPlane;
-                Color4 color = ((SolidColorBrush)map.RoofBrush).Color;
-                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(color.Red - dimmingFactor, color.Green - dimmingFactor, color.Blue - dimmingFactor, 1));
+                Brush dimmedBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
                 DXInterface.Context2D.FillRectangle(new RectangleF(0, y, cam.Resolution.Width, 1), dimmedBrush);
                 dimmedBrush.Dispose();
             }
@@ -94,7 +92,7 @@ namespace RetroEngine
                 float pixelX = ((distanceToStart / (walls[i].Direction.Length() / walls[i].StretchFactor.Width)) * walls[i].TextureSize.Width) % walls[i].TextureSize.Width;
                 if (upperYs[i] < lowerYs[i])
                 {
-                    DXInterface.Context2D.DrawBitmap(GameConstants.TextureManager.Textures["errorimage.jpg"], new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(pixelX, 0, 1, walls[i].TextureSize.Height));
+                    DXInterface.Context2D.DrawBitmap(walls[i].Texture, new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(pixelX, 0, 1, walls[i].TextureSize.Height));
                     DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), distanceBrush);
                 }
                 else
