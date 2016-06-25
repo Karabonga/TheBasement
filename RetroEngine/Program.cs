@@ -15,7 +15,7 @@ namespace RetroEngine
             //Create a new game
             Game game = new Game(renderer);
             //Create a new scene
-            Scene scene1 = game.CreateScene(Color.CornflowerBlue, "DemoScene.hrs");
+            Scene scene1 = game.CreateScene(Color.CornflowerBlue, "Level1.hrs");
             //Load the scene into the game
             game.LoadScene(scene1);
             //Start the game

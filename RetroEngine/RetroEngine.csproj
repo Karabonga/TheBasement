@@ -38,6 +38,7 @@
     <None Include="Priority Queue\packages.config" />
     <None Include="Priority Queue\Priority Queue.nuspec" />
     <None Include="scenes\DemoScene.hrs" />
+    <None Include="scenes\Level1.hrs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\SharpDX.Direct2D1.dll" />
