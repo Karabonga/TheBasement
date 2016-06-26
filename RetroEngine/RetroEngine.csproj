@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Priority Queue\packages.config" />
     <None Include="Priority Queue\Priority Queue.nuspec" />
     <None Include="scenes\DemoScene.hrs" />

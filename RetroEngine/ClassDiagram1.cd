@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RetroEngine.Animation" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAEAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Animation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Camera" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAIAAAQAAAAEIgACQAAAAgAAAAAAAAAAQEAAA=</HashCode>
+      <FileName>Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Debug" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAIAAAAAAICAAAAAgAAAAAEAIAAAAAAAA=</HashCode>
+      <FileName>Debug.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.DXInterface" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAQEACAAAoBgACIAAAgAAAACAAAAAgEAAgAAAAA=</HashCode>
+      <FileName>DXInterface.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RetroEngine.InvalidSceneException" Collapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.SceneParserException" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Game" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYBAAAAACAAgAIEAQgACIAAEAAAABgAABAAAACAgAI=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RetroEngine.GameConstants" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAEAwAABAIAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>GameConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.GameObject" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAIAgAAKAAIACgAAAAgCAAAIAggAEAAI=</HashCode>
+      <FileName>GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RetroEngine.GraphicsHelper" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>GraphicsHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.HRMap" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAggAAAICAAAAAAAAAAAAIAAAAAAgBIAIIAChCAAIA=</HashCode>
+      <FileName>HRMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.HRParser" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAggAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HRParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.HRRenderer" Collapsed="true">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAgAAAAAAAAAAAAAAAAAQAAAAAggAAAAAAABAAA=</HashCode>
+      <FileName>HRRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.HRScene" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HRScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Input" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAQEAAAAAAAAAIAAAAAAIAAACAAAAABAgAAAQAA=</HashCode>
+      <FileName>Input.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Map" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAgAAAAIAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RetroEngine.Mathf" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAACAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Mathf.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.NPC" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAAAgAAAAASAAgAAAgAAEBAAAAAAAAAIAAAEACA=</HashCode>
+      <FileName>NPC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Parser" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgkAACEBAAAAAAAAAAAAAAAAAAAAAAAEAQAAAgAAI=</HashCode>
+      <FileName>Parser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.PathFinder" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiEAAABAAQABAAAAAAAgIQAAAAAAAIgAACgAAAAAA=</HashCode>
+      <FileName>PathFinder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Plane" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQAQAAAAEAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Plane.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Player" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIABAgAAAAAAABCAgACAIIAAEAAAAAAAAABBEAAEQQA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Program" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Renderer" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAgAACAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAA=</HashCode>
+      <FileName>Renderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RetroEngine.Scene" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAClAAAADAAAAAAAgAAAAAACAAAAAgBAEAAAwJAAAA=</HashCode>
+      <FileName>Scene.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RetroEngine.Sprite" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.TextureManager" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAEgAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>TextureManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Time" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAACEABAABAAAIAgAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Time.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetroEngine.Wall" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAgCACAIABAgACAQAAhAAAAIAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Priority_Queue.FastPriorityQueue&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAABQQAQAAARQAAAAARAQAAgABBAAEAiAAAAFQAAA=</HashCode>
+      <FileName>Priority Queue\FastPriorityQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Priority_Queue.FastPriorityQueueNode" Collapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAEAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Priority Queue\FastPriorityQueueNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Priority_Queue.SimplePriorityQueue&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAABARQAEAAARAQAAAAABAAEAAAAAABQAAA=</HashCode>
+      <FileName>Priority Queue\SimplePriorityQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Priority_Queue.IPriorityQueue&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAQQAAAAABAQAAAAABAAAAAAAAABQAAA=</HashCode>
+      <FileName>Priority Queue\IPriorityQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="RetroEngine.MessageState" Collapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAYAAAAAAABAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Debug.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

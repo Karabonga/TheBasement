@@ -56,6 +56,7 @@ namespace RetroEngine
             rotationspeed = 0;
             playercam.Position = position;
             playercam.Rotation = rotation;
+            Debug.Log(position.ToString());
         }
         private void collisionDetection()
         {
