@@ -22,6 +22,7 @@ namespace RetroEngine
             this.rotationspeed = 0;
             this.playercam = cam;
             this.scene = scene;
+            rotation = cam.Rotation;
         }
         public void handleInput(Input input)
         {
