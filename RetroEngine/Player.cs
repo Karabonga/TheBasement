@@ -5,19 +5,17 @@ namespace RetroEngine
 {
     class Player : GameObject
     {
-        private Vector3 startposition;
         private Vector3 rotation;
-        private Vector3 position;
         private float movespeed;
         private float rotationspeed;
         private Camera playercam;
         private Time time;
         private Scene scene;
+        private bool hasKey;
+
         public Player(Vector3 start, Camera cam, Scene scene)
             : base(start, null)
         {
-            this.startposition = start;
-            this.position = start;
             this.movespeed = 0;
             this.rotationspeed = 0;
             this.playercam = cam;
@@ -45,14 +43,14 @@ namespace RetroEngine
         {
             collisionDetection();
             Vector3 forward = Mathf.RotateAroundY(new Vector3(0, 0, 1), rotation.Y);
-            Vector3 oldPos = position;
-            position += forward * (float)(movespeed * time.DeltaTime);
+            Vector3 oldPos = Position;
+            Position += forward * (float)(movespeed * time.DeltaTime);
             movespeed = 0;
             rotation = new Vector3(rotation.X, (float)(rotation.Y + rotationspeed * time.DeltaTime), rotation.Z);
             rotationspeed = 0;
-            playercam.Position = position;
+            playercam.Position = Position;
             playercam.Rotation = rotation;
-            Debug.Log(position.ToString());
+            Debug.Log(Position.ToString());
         }
         private void collisionDetection()
         {
@@ -60,8 +58,8 @@ namespace RetroEngine
 
             foreach (Wall w in map.Walls)
             {
-                Vector2 delta = new Vector2(position.X, position.Z) - w.Start;
-                Vector2 delta2 = new Vector2(position.X, position.Z) - w.End;
+                Vector2 delta = new Vector2(Position.X, Position.Z) - w.Start;
+                Vector2 delta2 = new Vector2(Position.X, Position.Z) - w.End;
                 if (delta.Length() + delta2.Length() - w.Length < 0.3F)
                 {
                     float angle = (float)Math.Acos(Mathf.Dot(delta, w.Direction) / (delta.Length() * w.Direction.Length()));
@@ -74,24 +72,24 @@ namespace RetroEngine
                         normal.Normalize();
                         for (int i = 0; i < 10; i++)
                         {
-                            delta = new Vector2(position.X, position.Z) - w.Start;
+                            delta = new Vector2(Position.X, Position.Z) - w.Start;
                             angle = (float)Math.Acos(Mathf.Dot(delta, w.Direction) / (delta.Length() * w.Direction.Length()));
                             distance = (float)Math.Abs(Math.Tan(angle) * delta.Length());
                             if (distance < 0.4F)
                             {
                                 Vector3 dir1 = normal * (0.4F - distance) * (float)GameConstants.Time.DeltaTime * 60F;
                                 Vector3 dir2 = -dir1;
-                                Vector2 tmpdelta = new Vector2(position.X + dir1.X, position.Z + dir1.Z) - w.Start;
+                                Vector2 tmpdelta = new Vector2(Position.X + dir1.X, Position.Z + dir1.Z) - w.Start;
                                 float tmpangle = (float)Math.Acos(Mathf.Dot(tmpdelta, w.Direction) / (tmpdelta.Length() * w.Direction.Length()));
                                 float tmpdistance = (float)Math.Abs(Math.Tan(tmpangle) * delta.Length());
-                                Vector2 tmpdelta2 = new Vector2(position.X + dir2.X, position.Z + dir2.Z) - w.Start;
+                                Vector2 tmpdelta2 = new Vector2(Position.X + dir2.X, Position.Z + dir2.Z) - w.Start;
                                 float tmpangle2 = (float)Math.Acos(Mathf.Dot(tmpdelta2, w.Direction) / (tmpdelta2.Length() * w.Direction.Length()));
                                 float tmpdistance2 = (float)Math.Abs(Math.Tan(tmpangle2) * delta.Length());
                                 //Debug.Log(dir1.ToString() + " and " dir2.ToString());
                                 if (tmpdistance > tmpdistance2)
-                                    position += dir1;
+                                    Position += dir1;
                                 else
-                                    position += dir2;
+                                    Position += dir2;
                             }
                             else
                                 break;
@@ -104,11 +102,6 @@ namespace RetroEngine
         public override void update()
         {
             move();
-        }
-        public Vector3 StartPos
-        {
-            get { return startposition; }
-            set { startposition = value; }
         }
         public float MoveSpeed
         {
@@ -134,6 +127,12 @@ namespace RetroEngine
         {
             get { return scene; }
             set { scene = value; }
+        }
+
+        public bool HasKey
+        {
+            get { return hasKey; }
+            set { hasKey = value; }
         }
     }
 }
