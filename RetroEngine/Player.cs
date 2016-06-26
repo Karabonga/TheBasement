@@ -75,10 +75,9 @@ namespace RetroEngine
                     {
                         distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
                         delta = Math.Abs(distance - w.Length);
-                        if (delta < 0.15f)
+                        if (delta < 0.2f)
                         {
-                            
-                            position += normal * (0.15f - delta);
+                            position += normal * (0.2f - delta) * (float)GameConstants.Time.DeltaTime * 60F;
                         }
                     }
                 }

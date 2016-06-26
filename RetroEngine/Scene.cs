@@ -10,7 +10,7 @@ namespace RetroEngine
         protected string fileName;
         protected Map map;
         protected Camera cam;
-        protected List<NPC> npcs;
+        protected List<Sprite> sprites;
         protected Player player;
 
         public abstract void Load();
@@ -75,10 +75,10 @@ namespace RetroEngine
             get { return player; }
         }
 
-        public List<NPC> NPCs
+        public List<Sprite> Sprites
         {
-            get { return npcs; }
-            set { npcs = value; }
+            get { return sprites; }
+            set { sprites = value; }
         }
     }
 }

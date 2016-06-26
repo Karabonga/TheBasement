@@ -89,16 +89,13 @@ namespace RetroEngine
                     lastRefresh = gameTime;
                 }
 
-                //Set the buffer size to the window size
-                Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-
                 //Get current cursor position
                 int left = Console.CursorLeft;
                 int top = Console.CursorTop;
 
                 //Set the current cursor position to upper left corner
                 Console.CursorLeft = 0;
-                Console.CursorTop = 0;
+                Console.CursorTop = Math.Max(top - Console.WindowHeight + 1, 0);
 
                 //Set the background color to blue
                 Console.BackgroundColor = ConsoleColor.Blue;
