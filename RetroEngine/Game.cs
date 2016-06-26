@@ -3,6 +3,8 @@ using SharpDX.Windows;
 using System;
 using SharpDX;
 using System.Windows.Forms;
+using System.Media;
+using System.IO;
 
 namespace RetroEngine
 {
@@ -16,6 +18,7 @@ namespace RetroEngine
         Renderer renderer;
         Input input;
         TextureManager textureMan;
+        SoundPlayer soundPlayer;
 
         public Game(Renderer renderer)
         {
@@ -39,6 +42,9 @@ namespace RetroEngine
             input.RegisterInput("MoveForward", Keys.W);
             input.RegisterInput("MoveBackward", Keys.S);
             input.RegisterInput("Activate", Keys.E);
+            
+            soundPlayer = new SoundPlayer(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\scenes\\Penumbra.wav");
+            soundPlayer.PlayLooping();
         }
 
         private void KeyUp(object sender, KeyEventArgs e)
@@ -148,8 +154,9 @@ namespace RetroEngine
                 if (scene.Sprites[i].GetType() == typeof(Key))
                 {
                     float distance = (scene.Player.Position - scene.Sprites[i].Position).Length();
-                    Debug.Log(scene.Player.Position.ToString());
-                    if (distance < 1.5F)
+
+                    Debug.Log(distance.ToString());
+                    if (distance < 2.5F)
                     {
                         scene.Player.HasKey = true;
                         scene.Sprites.RemoveAt(i);

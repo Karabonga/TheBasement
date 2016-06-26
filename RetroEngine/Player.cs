@@ -26,16 +26,16 @@ namespace RetroEngine
         {
             // acceleration
             if (input.GetKeyDown("MoveForward"))
-                movespeed = 10;
+                movespeed = 5;
 
             if (input.GetKeyDown("MoveBackward"))
-                movespeed = -10;
+                movespeed = -5;
 
             if (input.GetKeyDown("TurnLeft"))
-                rotationspeed = -200;
+                rotationspeed = -100;
 
             if (input.GetKeyDown("TurnRight"))
-                rotationspeed = 200;
+                rotationspeed = 100;
 
         }
 
@@ -50,7 +50,6 @@ namespace RetroEngine
             rotationspeed = 0;
             playercam.Position = Position;
             playercam.Rotation = rotation;
-            Debug.Log(Position.ToString());
         }
         private void collisionDetection()
         {

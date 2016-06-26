@@ -69,6 +69,8 @@ namespace RetroEngine
                     if (!float.TryParse(tmp[5], out top))
                         throw new Exception("Couldn't parse float at " + (y + 1) + ", 6 in file '" + fileName + "'.");
                     Wall wall = new Wall(start, end, top, bottom, GameConstants.TextureManager.Textures[tmp[6]]);
+                    if (tmp[6] == "door.jpg")
+                        wall.StretchFactor = new Size2F(1, 1);
                     ((HRMap)map).AddWall(wall);
                     Debug.Log("Parser: Added wall from " + wall.Start.ToString() + " to " + wall.End.ToString());
                 }

@@ -47,6 +47,7 @@
     <Content Include="lib\SharpDX.dll" />
     <Content Include="lib\SharpDX.DXGI.dll" />
     <Content Include="Priority Queue\Priority Queue.csproj" />
+    <Content Include="scenes\Penumbra.wav" />
     <Content Include="textures\door.jpg" />
     <Content Include="textures\errorimage.jpg" />
     <Content Include="textures\key2.png" />
