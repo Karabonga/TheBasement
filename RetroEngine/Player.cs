@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SharpDX;
-using System.Drawing;
 
 namespace RetroEngine
 {
@@ -61,24 +56,44 @@ namespace RetroEngine
         private void collisionDetection()
         {
             HRMap map = (HRMap)scene.Map;
-            
-            foreach(Wall w in map.Walls)
+
+            foreach (Wall w in map.Walls)
             {
-                float distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
-                float delta = Math.Abs(distance - w.Length);
-                if(delta < 0.16f)
+                Vector2 delta = new Vector2(position.X, position.Z) - w.Start;
+                Vector2 delta2 = new Vector2(position.X, position.Z) - w.End;
+                if (delta.Length() + delta2.Length() - w.Length < 0.3F)
                 {
-                    Vector3 normal = new Vector3(w.Normal.X, 0, w.Normal.Y);
-                    float d = (position.X - w.Start.X) * (w.End.Y - w.Start.Y) - (position.Y - w.Start.Y) * (w.End.X - w.Start.X);
-                    normal.Normalize();
-                    normal *= d > 0 ? -1 : 1;
-                    for (int i = 0; i < 10; i++)
+                    float angle = (float)Math.Acos(Mathf.Dot(delta, w.Direction) / (delta.Length() * w.Direction.Length()));
+                    if (MathUtil.RadiansToDegrees(angle) > 90)
+                        continue;
+                    float distance = (float)Math.Abs(Math.Tan(angle) * delta.Length());
+                    if (distance < 0.4F)
                     {
-                        distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
-                        delta = Math.Abs(distance - w.Length);
-                        if (delta < 0.16f)
+                        Vector3 normal = new Vector3(w.Normal.X, 0, w.Normal.Y);
+                        normal.Normalize();
+                        for (int i = 0; i < 10; i++)
                         {
-                            position += normal * (0.16f - delta) * (float)GameConstants.Time.DeltaTime * 60F;
+                            delta = new Vector2(position.X, position.Z) - w.Start;
+                            angle = (float)Math.Acos(Mathf.Dot(delta, w.Direction) / (delta.Length() * w.Direction.Length()));
+                            distance = (float)Math.Abs(Math.Tan(angle) * delta.Length());
+                            if (distance < 0.4F)
+                            {
+                                Vector3 dir1 = normal * (0.4F - distance) * (float)GameConstants.Time.DeltaTime * 60F;
+                                Vector3 dir2 = -dir1;
+                                Vector2 tmpdelta = new Vector2(position.X + dir1.X, position.Z + dir1.Z) - w.Start;
+                                float tmpangle = (float)Math.Acos(Mathf.Dot(tmpdelta, w.Direction) / (tmpdelta.Length() * w.Direction.Length()));
+                                float tmpdistance = (float)Math.Abs(Math.Tan(tmpangle) * delta.Length());
+                                Vector2 tmpdelta2 = new Vector2(position.X + dir2.X, position.Z + dir2.Z) - w.Start;
+                                float tmpangle2 = (float)Math.Acos(Mathf.Dot(tmpdelta2, w.Direction) / (tmpdelta2.Length() * w.Direction.Length()));
+                                float tmpdistance2 = (float)Math.Abs(Math.Tan(tmpangle2) * delta.Length());
+                                //Debug.Log(dir1.ToString() + " and " dir2.ToString());
+                                if (tmpdistance > tmpdistance2)
+                                    position += dir1;
+                                else
+                                    position += dir2;
+                            }
+                            else
+                                break;
                         }
                     }
                 }
