@@ -63,10 +63,10 @@ namespace RetroEngine
             HRMap map = (HRMap)scene.Map;
             
             foreach(Wall w in map.Walls)
-            {                
+            {
                 float distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
                 float delta = Math.Abs(distance - w.Length);
-                if(delta < 0.2f)
+                if(delta < 0.16f)
                 {
                     Vector3 normal = new Vector3(w.Normal.X, 0, w.Normal.Y);
                     float d = (position.X - w.Start.X) * (w.End.Y - w.Start.Y) - (position.Y - w.Start.Y) * (w.End.X - w.Start.X);
@@ -76,9 +76,9 @@ namespace RetroEngine
                     {
                         distance = (new Vector2(position.X, position.Z) - w.Start).Length() + (new Vector2(position.X, position.Z) - w.End).Length();
                         delta = Math.Abs(distance - w.Length);
-                        if (delta < 0.2f)
+                        if (delta < 0.16f)
                         {
-                            position += normal * (0.2f - delta) * (float)GameConstants.Time.DeltaTime * 60F;
+                            position += normal * (0.16f - delta) * (float)GameConstants.Time.DeltaTime * 60F;
                         }
                     }
                 }
@@ -88,7 +88,6 @@ namespace RetroEngine
         public override void update()
         {
             move();
-
         }
         public Vector3 StartPos
         {
