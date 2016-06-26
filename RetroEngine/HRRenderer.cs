@@ -137,32 +137,40 @@ namespace RetroEngine
         {
             for (int i = 0; i < culledObjects.Count; i++)
             {
+                Brush distanceBrush;
                 if (culledObjects[i].GetType() == typeof(Wall))
                 {
                     Wall wall = (Wall)culledObjects[i];
                     //Dim the texture by distance
                     float dimmingFactor = distances[i] / scene.Camera.FarPlane;
-                    Brush distanceBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
+                    distanceBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
                     float distanceToStart = (collisions[i] - new Vector3(wall.Start.X, scene.Camera.Position.Y, wall.Start.Y)).Length();
                     //Stretch the texture
                     float pixelX = ((distanceToStart / (wall.Direction.Length() / wall.StretchFactor.Width)) * wall.TextureSize.Width) % wall.TextureSize.Width;
                     if (upperYs[i] < lowerYs[i])
                     {
                         DXInterface.Context2D.DrawBitmap(wall.Texture, new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(pixelX, 0, 1, wall.TextureSize.Height));
-                        DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i] - 1, 1, lowerYs[i] - upperYs[i] + 2), distanceBrush);
                     }
-                    else
-                    {
-                        //Draw to rectangles and leave a whole in the middle
-                        DXInterface.Context2D.FillRectangle(new RectangleF(x, 0, 1, lowerYs[i]), distanceBrush);
-                        DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i], 1, scene.Camera.Resolution.Height), distanceBrush);
-                    }
-                    distanceBrush.Dispose();
                 }
                 else
                 {
-
+                    Sprite sprite = (Sprite)culledObjects[i];
+                    //Dim the texture by distance
+                    Vector3 start = sprite.Position + Mathf.Left(sprite.Forward) * sprite.Scale.X / 2F;
+                    Vector3 end = sprite.Position - Mathf.Left(sprite.Forward) * sprite.Scale.X / 2F;
+                    Vector3 dir = end - start;
+                    float dimmingFactor = distances[i] / scene.Camera.FarPlane;
+                    distanceBrush = new SolidColorBrush(DXInterface.Context2D, new Color4(0, 0, 0, dimmingFactor));
+                    float distanceToStart = (collisions[i] - new Vector3(start.X, scene.Camera.Position.Y, start.Z)).Length();
+                    //Stretch the texture
+                    float pixelX = ((distanceToStart / dir.Length()) * sprite.TextureSize.Width) % sprite.TextureSize.Width;
+                    if (upperYs[i] < lowerYs[i])
+                    {
+                        DXInterface.Context2D.DrawBitmap(sprite.GetTexture(), new RectangleF(x, upperYs[i], 1, lowerYs[i] - upperYs[i]), 1.0F, BitmapInterpolationMode.NearestNeighbor, new RectangleF(pixelX, 0, 1, sprite.TextureSize.Height));
+                    }
                 }
+                DXInterface.Context2D.FillRectangle(new RectangleF(x, upperYs[i] - 1, 1, lowerYs[i] - upperYs[i] + 2), distanceBrush);
+                distanceBrush.Dispose();
             }
         }
 
@@ -217,7 +225,7 @@ namespace RetroEngine
         {
             //Simplify the collision to 2D
             //Create a plane for the wall
-            SharpDX.Plane plane = new SharpDX.Plane(sprite.Position, new Vector3(sprite.Forward.X, 0, sprite.Forward.Y));
+            SharpDX.Plane plane = new SharpDX.Plane(sprite.Position, new Vector3(sprite.Forward.X, 0, sprite.Forward.Z));
             if (ray.Intersects(ref plane, out collision))
             {
                 //Get the parameter t from the ray equation
@@ -238,7 +246,7 @@ namespace RetroEngine
                         //Calculate the distance from the origin of the camera to the current pixel x-coordinate in the screen plane
                         float distToPlane = (float)Math.Sqrt(Math.Pow(-cam.ScreenSize.Width / 2 + cam.ScreenSize.Width / (cam.Resolution.Width - 1) * currentX, 2) + 1);
                         upperY = middleY - ((sprite.Position.Y + sprite.Scale.Y / 2F - cam.Position.Y) / distance) * distToPlane * cam.Resolution.Height / cam.ScreenSize.Height;
-                        lowerY = middleY + ((cam.Position.Y - sprite.Position.Y - sprite.Scale.Y / 2F) / distance) * distToPlane * cam.Resolution.Height / cam.ScreenSize.Height;
+                        lowerY = middleY - ((sprite.Position.Y - sprite.Scale.Y / 2F - cam.Position.Y) / distance) * distToPlane * cam.Resolution.Height / cam.ScreenSize.Height;
                         return true;
                     }
                 }

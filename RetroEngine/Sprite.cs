@@ -19,9 +19,14 @@ namespace RetroEngine
             animation = new Animation(new Bitmap[] { bmp }, 1);
         }
 
-        public void Draw(Vector2 position, Size2F size)
+        public Bitmap GetTexture()
         {
-            GameConstants.Context2D.DrawBitmap(animation.GetFrame(GameConstants.Time.GameTime), new RectangleF(position.X, position.Y, size.Width, size.Height), 1.0F, BitmapInterpolationMode.NearestNeighbor);
+            return animation.GetFrame(GameConstants.Time.GameTime);
+        }
+
+        public void UpdateRotation(Player player)
+        {
+            //Rotation = new Vector3(0, MathUtil.RadiansToDegrees(Mathf.IntersectionAngle(new Vector2(player.Forward.X, player.Forward.Z), new Vector2(Forward.X, Forward.Z))), 0);
         }
     }
 }

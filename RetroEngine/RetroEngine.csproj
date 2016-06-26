@@ -48,6 +48,7 @@
     <Content Include="lib\SharpDX.DXGI.dll" />
     <Content Include="Priority Queue\Priority Queue.csproj" />
     <Content Include="textures\errorimage.jpg" />
+    <Content Include="textures\PuppetSlave.png" />
     <Content Include="textures\WoodenWall.png" />
     <Content Include="textures\WoodenWallGap.png" />
     <Content Include="textures\WoodenWallRustyWindow.png" />
@@ -98,6 +99,7 @@
     <Compile Include="Priority Queue\Properties\AssemblyInfo.cs" />
     <Compile Include="Priority Queue\SimplePriorityQueue.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Puppet.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />

@@ -19,6 +19,11 @@ namespace RetroEngine
             return new Vector3(x, v.Y, z);
         }
 
+        public static float IntersectionAngle(Vector2 v1, Vector2 v2)
+        {
+            return (float)Math.Acos(Dot(v1, v2) / (v1.Length() * v2.Length()));
+        }
+
         /// <summary>
         /// Gets the left vector to the given vector assuming the up vector is (0, 1, 0).
         /// </summary>

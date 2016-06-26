@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using System.Collections.Generic;
 
 namespace RetroEngine
 {
@@ -9,6 +10,7 @@ namespace RetroEngine
         protected float playerRotation;
         protected Map map;
         protected string fileName;
+        protected List<Sprite> sprites;
 
         /// <summary>
         /// Parses the file data writes the information into a map object.
@@ -42,6 +44,11 @@ namespace RetroEngine
         public Map Map
         {
             get { return map; }
+        }
+
+        public List<Sprite> Sprites
+        {
+            get { return sprites; }
         }
     }
 }

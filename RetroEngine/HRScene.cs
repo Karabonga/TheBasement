@@ -17,8 +17,7 @@ namespace RetroEngine
             player = new Player(new Vector3(parser.StartPosition.X, 2f, parser.StartPosition.Y), cam, this);
             player.Time = GameConstants.Time;
             player.Rotation = cam.Rotation;
-            sprites = new List<Sprite>();
-            sprites.Add(new NPC(new Vector3(10, 1, 10), new Animation(new Bitmap[] { GameConstants.TextureManager.Textures["errorimage.jpg"]}, 1), (HRMap)map, 1, new List<Vector2>()));
+            sprites = parser.Sprites;
         }
     }
 }

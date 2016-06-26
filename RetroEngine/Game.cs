@@ -140,6 +140,8 @@ namespace RetroEngine
             Debug.Refresh(time.DeltaTime, gameTime);
             //Finally update the input
             scene.Player.update();
+            foreach (Sprite s in scene.Sprites)
+                s.UpdateRotation(scene.Player);
             input.FinalUpdate();
         }
 
