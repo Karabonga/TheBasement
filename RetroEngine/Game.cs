@@ -38,6 +38,7 @@ namespace RetroEngine
             input.RegisterInput("TurnRight", Keys.D);
             input.RegisterInput("MoveForward", Keys.W);
             input.RegisterInput("MoveBackward", Keys.S);
+            input.RegisterInput("Activate", Keys.E);
         }
 
         private void KeyUp(object sender, KeyEventArgs e)
@@ -79,7 +80,7 @@ namespace RetroEngine
                 //Log the error that occured while loading the scene
                 string errorMessage = "Couldn't load current scene!";
                 //Log the inner errors iteratively
-                while(ex != null)
+                while (ex != null)
                 {
                     errorMessage += " " + ex.Message;
                     ex = ex.InnerException;
@@ -140,8 +141,33 @@ namespace RetroEngine
             Debug.Refresh(time.DeltaTime, gameTime);
             //Finally update the input
             scene.Player.update();
-            foreach (Sprite s in scene.Sprites)
-                s.UpdateRotation(scene.Player);
+            for (int i = 0; i < scene.Sprites.Count; i++)
+            {
+                scene.Sprites[i].UpdateRotation(scene.Player);
+
+                if (scene.Sprites[i].GetType() == typeof(Key))
+                {
+                    float distance = (scene.Player.Position - scene.Sprites[i].Position).Length();
+                    Debug.Log(scene.Player.Position.ToString());
+                    if (distance < 1.5F)
+                    {
+                        scene.Player.HasKey = true;
+                        scene.Sprites.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+
+            if (input.GetKeyDown("Activate"))
+            {
+                if ((scene.Player.Position - new Vector3(55, scene.Player.Position.Y, 13)).Length() < 2)
+                {
+                    if (((HRMap)scene.Map).Walls.Count > 48)
+                        ((HRMap)(scene.Map)).Walls.RemoveAt(48);
+                    scene.Player.HasKey = false;
+                }
+            }
+
             input.FinalUpdate();
         }
 

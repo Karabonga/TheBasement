@@ -120,6 +120,17 @@ namespace RetroEngine
                             throw new Exception("Couldn't parse float at " + (y + 1) + ", 4 in file '" + fileName + "'.");
                         sprites.Add(new Puppet(pos));
                     }
+                    else if (tmp[0] == "key")
+                    {
+
+                        if (!float.TryParse(tmp[1], out pos.X))
+                            throw new Exception("Couldn't parse float at " + (y + 1) + ", 2 in file '" + fileName + "'.");
+                        if (!float.TryParse(tmp[2], out pos.Z))
+                            throw new Exception("Couldn't parse float at " + (y + 1) + ", 3 in file '" + fileName + "'.");
+                        if (!float.TryParse(tmp[3], out pos.Y))
+                            throw new Exception("Couldn't parse float at " + (y + 1) + ", 4 in file '" + fileName + "'.");
+                        sprites.Add(new Key(pos));
+                    }
                 }
 
             }
