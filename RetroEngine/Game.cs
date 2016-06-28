@@ -42,7 +42,9 @@ namespace RetroEngine
             input.RegisterInput("MoveForward", Keys.W);
             input.RegisterInput("MoveBackward", Keys.S);
             input.RegisterInput("Activate", Keys.E);
-            
+            input.RegisterInput("Fullscreen", Keys.F11);
+            input.RegisterInput("Escape", Keys.Escape);
+
             soundPlayer = new SoundPlayer(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\scenes\\Penumbra.wav");
             soundPlayer.PlayLooping();
         }
@@ -155,7 +157,6 @@ namespace RetroEngine
                 {
                     float distance = (scene.Player.Position - scene.Sprites[i].Position).Length();
 
-                    Debug.Log(distance.ToString());
                     if (distance < 2.5F)
                     {
                         scene.Player.HasKey = true;
@@ -169,11 +170,25 @@ namespace RetroEngine
             {
                 if ((scene.Player.Position - new Vector3(55, scene.Player.Position.Y, 13)).Length() < 2)
                 {
-                    if (((HRMap)scene.Map).Walls.Count > 48)
-                        ((HRMap)(scene.Map)).Walls.RemoveAt(48);
-                    scene.Player.HasKey = false;
+                    if (scene.Player.HasKey)
+                    {
+                        Debug.Log(((HRMap)scene.Map).Walls.Count.ToString());
+                        if (((HRMap)scene.Map).Walls.Count > 49)
+                        {
+                            ((HRMap)(scene.Map)).Walls.RemoveAt(49);
+                            scene.Player.HasKey = false;
+                        }
+                    }
                 }
             }
+
+            //Fullscreen
+            if (input.GetKeyPressed("Fullscreen"))
+                renderer.DXInterface.ToggleFullscreen();
+
+            //Escape
+            if (input.GetKeyPressed("Escape"))
+                renderer.DXInterface.RenderForm.Close();
 
             input.FinalUpdate();
         }

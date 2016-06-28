@@ -60,7 +60,7 @@ namespace RetroEngine
                 textureSize.Height = (int)(textureSize.Height * 0.5F);
                 GameConstants.Context2D.DrawBitmap(GameConstants.TextureManager.Textures["key2.png"], new RectangleF(scene.Camera.Resolution.Width - textureSize.Width - 6, scene.Camera.Resolution.Height - textureSize.Height - 6, textureSize.Width, textureSize.Height), 1.0F, BitmapInterpolationMode.NearestNeighbor);
             }
-            if ((scene.Player.Position - new Vector3(55, scene.Player.Position.Y, 13)).Length() < 2 && ((HRMap)scene.Map).Walls.Count > 48)
+            if ((scene.Player.Position - new Vector3(55, scene.Player.Position.Y, 13)).Length() < 2 && ((HRMap)scene.Map).Walls.Count > 49)
             {
                 TextFormat textFormat = new TextFormat(new SharpDX.DirectWrite.Factory(), "Consolas", 12);
                 SolidColorBrush brush = new SolidColorBrush(GameConstants.Context2D, Color4.Black);

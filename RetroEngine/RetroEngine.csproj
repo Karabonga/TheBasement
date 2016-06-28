@@ -52,6 +52,7 @@
     <Content Include="textures\errorimage.jpg" />
     <Content Include="textures\key2.png" />
     <Content Include="textures\PuppetSlave.png" />
+    <Content Include="textures\PuppetSlave2.png" />
     <Content Include="textures\WoodenWall.png" />
     <Content Include="textures\WoodenWallGap.png" />
     <Content Include="textures\WoodenWallRustyWindow.png" />
